@@ -1,0 +1,283 @@
+{
+  "@@locale": "en",
+
+  "appName": "MotoSlot",
+  "appTagline": "Motorcycle Driving Academy",
+  "signOut": "Sign Out",
+  "cancel": "Cancel",
+  "retry": "Retry",
+  "select": "Select",
+  "today": "Today",
+  "all": "All",
+  "none": "None",
+  "loading": "Loading...",
+  "unexpectedError": "An unexpected error occurred.",
+  "gelCurrency": "{amount} GEL",
+  "@gelCurrency": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "minutesShort": "{count} min",
+  "@minutesShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesFull": "{count} minutes",
+  "@minutesFull": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minLesson": "{count} min lesson",
+  "@minLesson": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "welcomeToMotoSlot": "Welcome to MotoSlot",
+  "signInSubtitle": "Sign in to manage your lessons",
+  "email": "Email",
+  "emailHint": "Enter your email",
+  "password": "Password",
+  "passwordHint": "Enter your password",
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In",
+  "dontHaveAccount": "Don't have an account? ",
+  "register": "Register",
+  "createAccount": "Create Account",
+  "joinMotoSlot": "Join MotoSlot",
+  "createAccountSubtitle": "Create an account to book your motorcycle lessons",
+  "fullName": "Full Name",
+  "fullNameHint": "Enter your full name",
+  "phoneNumber": "Phone Number",
+  "phoneHint": "+995 XXX XXX XXX",
+  "createPassword": "Create a password",
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordHint": "Confirm your password",
+  "alreadyHaveAccount": "Already have an account? ",
+  "resetPassword": "Reset Password",
+  "forgotPasswordTitle": "Forgot your password?",
+  "forgotPasswordSubtitle": "Enter your email address and we'll send you a link to reset your password.",
+  "emailAddressHint": "Enter your email address",
+  "sendResetLink": "Send Reset Link",
+  "emailSent": "Email sent!",
+  "checkInboxForReset": "Check your inbox for a password reset link.",
+  "backToLogin": "Back to Login",
+  "signOutConfirmTitle": "Sign Out",
+  "signOutConfirmMessage": "Are you sure you want to sign out?",
+  "registrationFailed": "Registration failed. Please try again.",
+  "resetEmailFailed": "Failed to send reset email.",
+
+  "validatorEmailRequired": "Email is required",
+  "validatorEmailInvalid": "Please enter a valid email address",
+  "validatorPasswordRequired": "Password is required",
+  "validatorPasswordMinLength": "Password must be at least 6 characters",
+  "validatorNameRequired": "Name is required",
+  "validatorNameMinLength": "Name must be at least 2 characters",
+  "validatorPhoneRequired": "Phone number is required",
+  "validatorPhoneInvalid": "Please enter a valid phone number",
+  "validatorFieldRequired": "{fieldName} is required",
+  "@validatorFieldRequired": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validatorConfirmPasswordRequired": "Please confirm your password",
+  "validatorPasswordsDoNotMatch": "Passwords do not match",
+
+  "book": "Book",
+  "myBookings": "My Bookings",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "loadingBookings": "Loading bookings...",
+  "failedToLoadBookings": "Failed to load bookings",
+  "noUpcomingBookings": "No upcoming bookings",
+  "noUpcomingBookingsSubtitle": "Book your first lesson from the calendar",
+  "noPastBookings": "No past bookings",
+  "noPastBookingsSubtitle": "Your completed lessons will appear here",
+  "loadingAvailableSlots": "Loading available slots...",
+  "failedToLoadSlots": "Failed to load slots",
+  "noAvailableSlots": "No available slots",
+  "noAvailableSlotsSubtitle": "Try selecting a different date",
+  "availableOn": "Available on {date}",
+  "@availableOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "slotDetails": "Slot Details",
+  "date": "Date",
+  "time": "Time",
+  "duration": "Duration",
+  "instructor": "Instructor",
+  "location": "Location",
+  "lessonFee": "Lesson Fee",
+  "payAndConfirmBooking": "Pay & Confirm Booking",
+  "slotHeldDuringPayment": "Your slot will be held for 10 minutes during payment.",
+  "bookingDetails": "Booking Details",
+  "lessonDetails": "Lesson Details",
+  "contact": "Contact",
+  "amount": "Amount",
+  "cancelBooking": "Cancel Booking",
+  "cancelBookingConfirmTitle": "Cancel Booking?",
+  "cancelBookingConfirmMessage": "Are you sure you want to cancel this booking? This action cannot be undone.",
+  "keepBooking": "Keep Booking",
+  "failedToCreateBooking": "Failed to create booking.",
+  "failedToLoadAvailableSlots": "Failed to load available slots.",
+  "bookingConfirmed": "Booking Confirmed!",
+  "bookingConfirmedSubtitle": "Your motorcycle lesson has been booked successfully.",
+  "bookingReference": "Booking Reference",
+  "amountPaid": "Amount Paid",
+  "reminderNotice": "You will receive reminders 24 hours and 1 hour before your lesson.",
+  "viewMyBookings": "View My Bookings",
+  "bookAnotherLesson": "Book Another Lesson",
+
+  "payment": "Payment",
+  "amountDue": "Amount Due",
+  "refLabel": "Ref: {reference}",
+  "@refLabel": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "selectPaymentMethod": "Select Payment Method",
+  "tbcBank": "TBC Bank",
+  "payWithTbcCard": "Pay with TBC Bank card",
+  "bankOfGeorgia": "Bank of Georgia",
+  "payWithBogCard": "Pay with BOG card",
+  "processingPayment": "Processing payment...",
+  "paymentRedirectNotice": "You will be redirected to the bank's secure payment page. Your slot is held for 10 minutes.",
+  "cancelPaymentTitle": "Cancel Payment?",
+  "cancelPaymentMessage": "Your booking will be cancelled and the slot will be released.",
+  "continuePayment": "Continue Payment",
+  "securePayment": "Secure Payment",
+  "loadingPaymentPage": "Loading payment page...",
+  "paymentVerificationFailed": "Payment verification failed.",
+  "paymentNotCompleted": "Payment was not completed.",
+  "paymentVerificationError": "Payment verification error.",
+
+  "admin": "ADMIN",
+  "calendar": "Calendar",
+  "bookings": "Bookings",
+  "settings": "Settings",
+  "manualBook": "Manual Book",
+  "blockDate": "Block Date",
+  "unblockDate": "Unblock Date",
+  "noBookingsForDay": "No bookings for this day",
+  "noBookingsForDaySubtitle": "Bookings will appear here when users book slots",
+  "noBookingsFound": "No bookings found",
+  "noBookingsFoundSubtitle": "Try adjusting the filter",
+  "manualBooking": "Manual Booking",
+  "userInformation": "User Information",
+  "name": "Name",
+  "phone": "Phone",
+  "markAsCompleted": "Mark as Completed",
+  "cancelBookingAdminMessage": "This will release the slot and notify the user.",
+  "keep": "Keep",
+  "studentInfo": "1. Student Info",
+  "firstName": "First Name",
+  "firstNameHint": "First name",
+  "lastName": "Last Name",
+  "lastNameHint": "Last name",
+  "selectSlot": "2. Select Slot",
+  "noSlotsForDate": "No available slots for selected date.",
+  "bookingDetailsStep": "3. Booking Details",
+  "autoFilledFromSettings": "Auto-filled from your settings. Edit if needed.",
+  "instructorName": "Instructor Name",
+  "instructorNameHint": "Default instructor name",
+  "enterInstructorName": "Enter instructor name",
+  "defaultLocation": "Default Location",
+  "defaultLocationHint": "Training ground address",
+  "enterLessonLocation": "Enter lesson location",
+  "contactPhone": "Contact Phone",
+  "contactPhoneHint": "Phone number sent to students",
+  "contactPhoneBookingHint": "Contact phone number",
+  "createBookingAndSendSms": "Create Booking & Send SMS",
+  "availabilitySettings": "Availability Settings",
+  "workingDays": "Working Days",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "lessonDuration": "Lesson Duration",
+  "bufferBetweenLessons": "Buffer Between Lessons",
+  "saveSettings": "Save Settings",
+  "generateSlots": "Generate Slots",
+  "generateSlotsSubtitle": "Generate bookable slots based on your availability settings.",
+  "from": "From",
+  "to": "To",
+
+  "settingsSaved": "Availability settings saved.",
+  "configureSettingsFirst": "Please configure availability settings first.",
+  "slotsGenerated": "{count} slots generated.",
+  "@slotsGenerated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dateBlocked": "Date blocked successfully.",
+  "dateUnblocked": "Date unblocked.",
+  "bookingCreatedSmsSent": "Booking created and SMS sent to {phone}.",
+  "@bookingCreatedSmsSent": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelled": "Booking cancelled.",
+  "bookingMarkedCompleted": "Booking marked as completed.",
+  "failedToLoadSlotsError": "Failed to load slots: {error}",
+  "@failedToLoadSlotsError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "bookingStatusPendingPayment": "Pending Payment",
+  "bookingStatusConfirmed": "Confirmed",
+  "bookingStatusCancelled": "Cancelled",
+  "bookingStatusCompleted": "Completed",
+  "bookingStatusExpired": "Expired",
+  "slotStatusAvailable": "Available",
+  "slotStatusLocked": "Locked",
+  "slotStatusBooked": "Booked",
+  "slotStatusBlocked": "Blocked",
+  "paymentStatusPending": "Pending",
+  "paymentStatusProcessing": "Processing",
+  "paymentStatusSuccess": "Success",
+  "paymentStatusFailed": "Failed",
+  "paymentStatusCancelled": "Cancelled",
+  "paymentProviderTbc": "TBC Bank",
+  "paymentProviderBog": "Bank of Georgia",
+  "dayMonday": "Monday",
+  "dayTuesday": "Tuesday",
+  "dayWednesday": "Wednesday",
+  "dayThursday": "Thursday",
+  "dayFriday": "Friday",
+  "daySaturday": "Saturday",
+  "daySunday": "Sunday",
+
+  "language": "Language",
+  "english": "English",
+  "georgian": "Georgian"
+}

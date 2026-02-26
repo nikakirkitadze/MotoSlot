@@ -1,0 +1,283 @@
+{
+  "@@locale": "ka",
+
+  "appName": "MotoSlot",
+  "appTagline": "მოტოციკლის მართვის აკადემია",
+  "signOut": "გასვლა",
+  "cancel": "გაუქმება",
+  "retry": "თავიდან ცდა",
+  "select": "არჩევა",
+  "today": "დღეს",
+  "all": "ყველა",
+  "none": "არცერთი",
+  "loading": "იტვირთება...",
+  "unexpectedError": "მოულოდნელი შეცდომა მოხდა.",
+  "gelCurrency": "{amount} ₾",
+  "@gelCurrency": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "minutesShort": "{count} წთ",
+  "@minutesShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesFull": "{count} წუთი",
+  "@minutesFull": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minLesson": "{count} წთ გაკვეთილი",
+  "@minLesson": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "welcomeToMotoSlot": "კეთილი იყოს თქვენი მობრძანება MotoSlot-ში",
+  "signInSubtitle": "შედით თქვენი გაკვეთილების სამართავად",
+  "email": "ელ. ფოსტა",
+  "emailHint": "შეიყვანეთ ელ. ფოსტა",
+  "password": "პაროლი",
+  "passwordHint": "შეიყვანეთ პაროლი",
+  "forgotPassword": "დაგავიწყდათ პაროლი?",
+  "signIn": "შესვლა",
+  "dontHaveAccount": "არ გაქვთ ანგარიში? ",
+  "register": "რეგისტრაცია",
+  "createAccount": "ანგარიშის შექმნა",
+  "joinMotoSlot": "შემოგვიერთდით MotoSlot-ში",
+  "createAccountSubtitle": "შექმენით ანგარიში მოტოციკლის გაკვეთილების დასაჯავშნად",
+  "fullName": "სრული სახელი",
+  "fullNameHint": "შეიყვანეთ სრული სახელი",
+  "phoneNumber": "ტელეფონის ნომერი",
+  "phoneHint": "+995 XXX XXX XXX",
+  "createPassword": "შექმენით პაროლი",
+  "confirmPassword": "დაადასტურეთ პაროლი",
+  "confirmPasswordHint": "ხელახლა შეიყვანეთ პაროლი",
+  "alreadyHaveAccount": "უკვე გაქვთ ანგარიში? ",
+  "resetPassword": "პაროლის აღდგენა",
+  "forgotPasswordTitle": "დაგავიწყდათ პაროლი?",
+  "forgotPasswordSubtitle": "შეიყვანეთ ელ. ფოსტის მისამართი და ჩვენ გამოგიგზავნით პაროლის აღდგენის ბმულს.",
+  "emailAddressHint": "შეიყვანეთ ელ. ფოსტის მისამართი",
+  "sendResetLink": "აღდგენის ბმულის გაგზავნა",
+  "emailSent": "წერილი გაგზავნილია!",
+  "checkInboxForReset": "შეამოწმეთ თქვენი ელ. ფოსტა პაროლის აღდგენის ბმულისთვის.",
+  "backToLogin": "შესვლაზე დაბრუნება",
+  "signOutConfirmTitle": "გასვლა",
+  "signOutConfirmMessage": "დარწმუნებული ხართ, რომ გსურთ გასვლა?",
+  "registrationFailed": "რეგისტრაცია ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
+  "resetEmailFailed": "აღდგენის წერილის გაგზავნა ვერ მოხერხდა.",
+
+  "validatorEmailRequired": "ელ. ფოსტა აუცილებელია",
+  "validatorEmailInvalid": "გთხოვთ, შეიყვანოთ სწორი ელ. ფოსტის მისამართი",
+  "validatorPasswordRequired": "პაროლი აუცილებელია",
+  "validatorPasswordMinLength": "პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო",
+  "validatorNameRequired": "სახელი აუცილებელია",
+  "validatorNameMinLength": "სახელი უნდა იყოს მინიმუმ 2 სიმბოლო",
+  "validatorPhoneRequired": "ტელეფონის ნომერი აუცილებელია",
+  "validatorPhoneInvalid": "გთხოვთ, შეიყვანოთ სწორი ტელეფონის ნომერი",
+  "validatorFieldRequired": "{fieldName} აუცილებელია",
+  "@validatorFieldRequired": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validatorConfirmPasswordRequired": "გთხოვთ, დაადასტუროთ პაროლი",
+  "validatorPasswordsDoNotMatch": "პაროლები არ ემთხვევა",
+
+  "book": "ჯავშანი",
+  "myBookings": "ჩემი ჯავშნები",
+  "upcoming": "მომავალი",
+  "past": "წარსული",
+  "loadingBookings": "ჯავშნები იტვირთება...",
+  "failedToLoadBookings": "ჯავშნების ჩატვირთვა ვერ მოხერხდა",
+  "noUpcomingBookings": "მომავალი ჯავშნები არ არის",
+  "noUpcomingBookingsSubtitle": "დაჯავშნეთ პირველი გაკვეთილი კალენდრიდან",
+  "noPastBookings": "წარსული ჯავშნები არ არის",
+  "noPastBookingsSubtitle": "დასრულებული გაკვეთილები აქ გამოჩნდება",
+  "loadingAvailableSlots": "ხელმისაწვდომი სლოტები იტვირთება...",
+  "failedToLoadSlots": "სლოტების ჩატვირთვა ვერ მოხერხდა",
+  "noAvailableSlots": "ხელმისაწვდომი სლოტები არ არის",
+  "noAvailableSlotsSubtitle": "სცადეთ სხვა თარიღის არჩევა",
+  "availableOn": "ხელმისაწვდომია {date}-ზე",
+  "@availableOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "slotDetails": "სლოტის დეტალები",
+  "date": "თარიღი",
+  "time": "დრო",
+  "duration": "ხანგრძლივობა",
+  "instructor": "ინსტრუქტორი",
+  "location": "მისამართი",
+  "lessonFee": "გაკვეთილის ღირებულება",
+  "payAndConfirmBooking": "გადახდა და ჯავშნის დადასტურება",
+  "slotHeldDuringPayment": "თქვენი სლოტი დაცულია 10 წუთის განმავლობაში გადახდის პროცესში.",
+  "bookingDetails": "ჯავშნის დეტალები",
+  "lessonDetails": "გაკვეთილის დეტალები",
+  "contact": "კონტაქტი",
+  "amount": "თანხა",
+  "cancelBooking": "ჯავშნის გაუქმება",
+  "cancelBookingConfirmTitle": "გაუქმდეს ჯავშანი?",
+  "cancelBookingConfirmMessage": "დარწმუნებული ხართ, რომ გსურთ ამ ჯავშნის გაუქმება? ეს მოქმედება შეუქცევადია.",
+  "keepBooking": "ჯავშნის შენარჩუნება",
+  "failedToCreateBooking": "ჯავშნის შექმნა ვერ მოხერხდა.",
+  "failedToLoadAvailableSlots": "ხელმისაწვდომი სლოტების ჩატვირთვა ვერ მოხერხდა.",
+  "bookingConfirmed": "ჯავშანი დადასტურებულია!",
+  "bookingConfirmedSubtitle": "თქვენი მოტოციკლის გაკვეთილი წარმატებით დაიჯავშნა.",
+  "bookingReference": "ჯავშნის ნომერი",
+  "amountPaid": "გადახდილი თანხა",
+  "reminderNotice": "თქვენ მიიღებთ შეხსენებას 24 საათით და 1 საათით ადრე გაკვეთილამდე.",
+  "viewMyBookings": "ჩემი ჯავშნების ნახვა",
+  "bookAnotherLesson": "სხვა გაკვეთილის დაჯავშნა",
+
+  "payment": "გადახდა",
+  "amountDue": "გადასახდელი თანხა",
+  "refLabel": "მითითება: {reference}",
+  "@refLabel": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "selectPaymentMethod": "აირჩიეთ გადახდის მეთოდი",
+  "tbcBank": "თიბისი ბანკი",
+  "payWithTbcCard": "გადაიხადეთ თიბისი ბანკის ბარათით",
+  "bankOfGeorgia": "საქართველოს ბანკი",
+  "payWithBogCard": "გადაიხადეთ BOG ბარათით",
+  "processingPayment": "გადახდა მუშავდება...",
+  "paymentRedirectNotice": "თქვენ გადამისამართდებით ბანკის უსაფრთხო გადახდის გვერდზე. თქვენი სლოტი დაცულია 10 წუთის განმავლობაში.",
+  "cancelPaymentTitle": "გადახდის გაუქმება?",
+  "cancelPaymentMessage": "თქვენი ჯავშანი გაუქმდება და სლოტი გათავისუფლდება.",
+  "continuePayment": "გადახდის გაგრძელება",
+  "securePayment": "უსაფრთხო გადახდა",
+  "loadingPaymentPage": "გადახდის გვერდი იტვირთება...",
+  "paymentVerificationFailed": "გადახდის ვერიფიკაცია ვერ მოხერხდა.",
+  "paymentNotCompleted": "გადახდა არ დასრულებულა.",
+  "paymentVerificationError": "გადახდის ვერიფიკაციის შეცდომა.",
+
+  "admin": "ADMIN",
+  "calendar": "კალენდარი",
+  "bookings": "ჯავშნები",
+  "settings": "პარამეტრები",
+  "manualBook": "ხელით ჯავშანი",
+  "blockDate": "თარიღის დაბლოკვა",
+  "unblockDate": "თარიღის განბლოკვა",
+  "noBookingsForDay": "ჯავშნები ამ დღეს არ არის",
+  "noBookingsForDaySubtitle": "ჯავშნები აქ გამოჩნდება, როცა მომხმარებლები სლოტებს დაჯავშნავენ",
+  "noBookingsFound": "ჯავშნები ვერ მოიძებნა",
+  "noBookingsFoundSubtitle": "სცადეთ ფილტრის შეცვლა",
+  "manualBooking": "ხელით ჯავშანი",
+  "userInformation": "მომხმარებლის ინფორმაცია",
+  "name": "სახელი",
+  "phone": "ტელეფონი",
+  "markAsCompleted": "დასრულებულად მონიშვნა",
+  "cancelBookingAdminMessage": "სლოტი გათავისუფლდება და მომხმარებელს ეცნობება.",
+  "keep": "შენარჩუნება",
+  "studentInfo": "1. სტუდენტის ინფო",
+  "firstName": "სახელი",
+  "firstNameHint": "სახელი",
+  "lastName": "გვარი",
+  "lastNameHint": "გვარი",
+  "selectSlot": "2. სლოტის არჩევა",
+  "noSlotsForDate": "არჩეულ თარიღზე ხელმისაწვდომი სლოტები არ არის.",
+  "bookingDetailsStep": "3. ჯავშნის დეტალები",
+  "autoFilledFromSettings": "ავტომატურად შევსებულია პარამეტრებიდან. საჭიროების შემთხვევაში შეცვალეთ.",
+  "instructorName": "ინსტრუქტორის სახელი",
+  "instructorNameHint": "ინსტრუქტორის სახელი",
+  "enterInstructorName": "შეიყვანეთ ინსტრუქტორის სახელი",
+  "defaultLocation": "მისამართი",
+  "defaultLocationHint": "სავარჯიშო მოედნის მისამართი",
+  "enterLessonLocation": "შეიყვანეთ გაკვეთილის მისამართი",
+  "contactPhone": "საკონტაქტო ტელეფონი",
+  "contactPhoneHint": "ტელეფონის ნომერი სტუდენტებისთვის",
+  "contactPhoneBookingHint": "საკონტაქტო ტელეფონის ნომერი",
+  "createBookingAndSendSms": "ჯავშნის შექმნა და SMS-ის გაგზავნა",
+  "availabilitySettings": "ხელმისაწვდომობის პარამეტრები",
+  "workingDays": "სამუშაო დღეები",
+  "startTime": "დაწყების დრო",
+  "endTime": "დასრულების დრო",
+  "lessonDuration": "გაკვეთილის ხანგრძლივობა",
+  "bufferBetweenLessons": "შესვენება გაკვეთილებს შორის",
+  "saveSettings": "პარამეტრების შენახვა",
+  "generateSlots": "სლოტების გენერაცია",
+  "generateSlotsSubtitle": "სლოტების გენერაცია ხელმისაწვდომობის პარამეტრების მიხედვით.",
+  "from": "საიდან",
+  "to": "სადამდე",
+
+  "settingsSaved": "ხელმისაწვდომობის პარამეტრები შენახულია.",
+  "configureSettingsFirst": "გთხოვთ, ჯერ დააკონფიგურიროთ ხელმისაწვდომობის პარამეტრები.",
+  "slotsGenerated": "{count} სლოტი შეიქმნა.",
+  "@slotsGenerated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dateBlocked": "თარიღი წარმატებით დაიბლოკა.",
+  "dateUnblocked": "თარიღი განიბლოკა.",
+  "bookingCreatedSmsSent": "ჯავშანი შეიქმნა და SMS გაეგზავნა {phone}-ზე.",
+  "@bookingCreatedSmsSent": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelled": "ჯავშანი გაუქმებულია.",
+  "bookingMarkedCompleted": "ჯავშანი დასრულებულად მოინიშნა.",
+  "failedToLoadSlotsError": "სლოტების ჩატვირთვა ვერ მოხერხდა: {error}",
+  "@failedToLoadSlotsError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "bookingStatusPendingPayment": "გადახდის მოლოდინში",
+  "bookingStatusConfirmed": "დადასტურებული",
+  "bookingStatusCancelled": "გაუქმებული",
+  "bookingStatusCompleted": "დასრულებული",
+  "bookingStatusExpired": "ვადაგასული",
+  "slotStatusAvailable": "ხელმისაწვდომი",
+  "slotStatusLocked": "დაბლოკილი",
+  "slotStatusBooked": "დაჯავშნილი",
+  "slotStatusBlocked": "შეზღუდული",
+  "paymentStatusPending": "მოლოდინში",
+  "paymentStatusProcessing": "მუშავდება",
+  "paymentStatusSuccess": "წარმატებული",
+  "paymentStatusFailed": "წარუმატებელი",
+  "paymentStatusCancelled": "გაუქმებული",
+  "paymentProviderTbc": "თიბისი ბანკი",
+  "paymentProviderBog": "საქართველოს ბანკი",
+  "dayMonday": "ორშაბათი",
+  "dayTuesday": "სამშაბათი",
+  "dayWednesday": "ოთხშაბათი",
+  "dayThursday": "ხუთშაბათი",
+  "dayFriday": "პარასკევი",
+  "daySaturday": "შაბათი",
+  "daySunday": "კვირა",
+
+  "language": "ენა",
+  "english": "English",
+  "georgian": "ქართული"
+}

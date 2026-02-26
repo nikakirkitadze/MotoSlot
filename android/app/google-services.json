@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "129788816836",
+    "firebase_url": "https://a-eye-8c9a7-default-rtdb.firebaseio.com",
+    "project_id": "a-eye-8c9a7",
+    "storage_bucket": "a-eye-8c9a7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129788816836:android:88063069ad0863715f0891",
+        "android_client_info": {
+          "package_name": "ge.motoslot.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpcFkdsnhssNiQz_SDAHrFsKAdFpC3pDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
