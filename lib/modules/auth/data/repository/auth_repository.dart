@@ -137,7 +137,28 @@ class AuthRepository {
         .get();
 
     if (!doc.exists || doc.data() == null) {
-      throw const AuthException(message: 'User profile not found.');
+      // Auto-create profile for users that exist in Firebase Auth but not Firestore
+      final firebaseUser = _firebaseAuth.currentUser;
+      if (firebaseUser == null) {
+        throw const AuthException(message: 'User profile not found.');
+      }
+
+      final appUser = AppUser(
+        id: uid,
+        email: firebaseUser.email ?? '',
+        fullName: firebaseUser.displayName ?? '',
+        phone: firebaseUser.phoneNumber ?? '',
+        role: UserRole.user,
+        createdAt: DateTime.now().toUtc(),
+      );
+
+      await _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(uid)
+          .set(appUser.toJson());
+
+      await _storageService.saveUserRole('user');
+      return appUser;
     }
 
     final appUser = AppUser.fromJson(doc.data()!);
