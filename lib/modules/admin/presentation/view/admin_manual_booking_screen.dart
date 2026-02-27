@@ -95,7 +95,6 @@ class _AdminManualBookingScreenState
         builder: (context, state) {
           return AppScaffold(
             hasBackButton: true,
-            title: context.l10n.manualBooking,
             body: AppLoadingOverlay(
               isLoading: state.isLoading,
               child: SingleChildScrollView(
@@ -104,19 +103,26 @@ class _AdminManualBookingScreenState
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     AppSpacing.verticalSm,
+                    Text(
+                      context.l10n.manualBooking,
+                      style: AppTypography.displayMedium.copyWith(
+                        color: AppColors.navy,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    AppSpacing.verticalMd,
                     // Step 1: Student info
                     AppCard(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(context.l10n.studentInfo, style: AppTypography.titleLarge),
+                          _buildSectionTitle('1', context.l10n.studentInfo.replaceFirst('1. ', '')),
                           AppSpacing.verticalMd,
                           Row(
                             children: [
                               Expanded(
                                 child: AppTextField(
-                                  label: context.l10n.firstName,
-                                  hint: context.l10n.firstNameHint,
+                                  hint: context.l10n.firstName,
                                   controller: _firstNameController,
                                   prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
                                   onChanged: (_) => setState(() {}),
@@ -125,8 +131,7 @@ class _AdminManualBookingScreenState
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppTextField(
-                                  label: context.l10n.lastName,
-                                  hint: context.l10n.lastNameHint,
+                                  hint: context.l10n.lastName,
                                   controller: _lastNameController,
                                   prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
                                   onChanged: (_) => setState(() {}),
@@ -152,7 +157,7 @@ class _AdminManualBookingScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(context.l10n.selectSlot, style: AppTypography.titleLarge),
+                          _buildSectionTitle('2', context.l10n.selectSlot.replaceFirst('2. ', '')),
                           AppSpacing.verticalMd,
                           InkWell(
                             onTap: () => _pickDate(context),
@@ -206,7 +211,7 @@ class _AdminManualBookingScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(context.l10n.bookingDetailsStep, style: AppTypography.titleLarge),
+                          _buildSectionTitle('3', context.l10n.bookingDetailsStep.replaceFirst('3. ', '')),
                           const SizedBox(height: 4),
                           Text(
                             context.l10n.autoFilledFromSettings,
@@ -250,6 +255,29 @@ class _AdminManualBookingScreenState
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String number, String title) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: '$number. ',
+            style: AppTypography.titleLarge.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          TextSpan(
+            text: title,
+            style: AppTypography.titleLarge.copyWith(
+              color: AppColors.navy,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }

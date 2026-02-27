@@ -279,5 +279,47 @@
 
   "language": "ენა",
   "english": "English",
-  "georgian": "ქართული"
+  "georgian": "ქართული",
+
+  "logIn": "შესვლა",
+  "emailAddress": "ელ. ფოსტის მისამართი",
+  "signUp": "რეგისტრაცია",
+  "scheduleLesson": "გაკვეთილის დაგეგმვა",
+  "availableSlotsFor": "ხელმისაწვდომი სლოტები {date}-ისთვის",
+  "@availableSlotsFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookNow": "დაჯავშნე",
+  "confirmBooking": "ჯავშნის დადასტურება",
+  "selectTimeSlot": "აირჩიეთ დრო",
+  "morning": "დილა",
+  "afternoon": "შუადღე",
+  "continueToPayment": "გადახდაზე გადასვლა",
+  "bookingPaymentSummary": "ჯავშნის გადახდის შეჯამება",
+  "payNow": "გადაიხადე",
+  "bookingConfirmation": "ჯავშნის დადასტურება",
+  "bookingSuccessful": "ჯავშანი წარმატებულია!",
+  "lesson": "გაკვეთილი",
+  "backToHome": "მთავარზე დაბრუნება",
+  "adminAnalyticsDashboard": "ადმინ ანალიტიკის დაფა",
+  "totalBookings": "სულ ჯავშნები",
+  "revenue": "შემოსავალი",
+  "activeUsers": "აქტიური მომხმარებლები",
+  "thisMonth": "ამ თვეში",
+  "filter": "ფილტრი",
+  "upcomingLessons": "მომავალი გაკვეთილები",
+  "seeAll": "ყველას ნახვა",
+  "dashboard": "მთავარი",
+  "users": "მომხმარებლები",
+  "noBookingsYet": "ჯავშნები ჯერ არ არის",
+  "noBookingsYetSubtitle": "თქვენი მოტოციკლის გაკვეთილების ჯავშნები აქ გამოჩნდება დაგეგმვის შემდეგ.",
+  "signOutMessage": "დარწმუნებული ხართ, რომ გსურთ გასვლა? ჯავშნების სამართავად ხელახლა შესვლა დაგჭირდებათ.",
+  "confirmed": "დადასტურებული",
+  "pending": "მოლოდინში",
+  "secureSSLEncrypted": "დაცული SSL დაშიფვრა",
+  "termsAgreement": "გადახდაზე დაჭერით თქვენ ეთანხმებით ჩვენს წესებსა და პირობებს."
 }

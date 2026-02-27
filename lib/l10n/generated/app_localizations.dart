@@ -1303,6 +1303,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Georgian'**
   String get georgian;
+
+  /// No description provided for @logIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get logIn;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @scheduleLesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Lesson'**
+  String get scheduleLesson;
+
+  /// No description provided for @availableSlotsFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Slots for {date}'**
+  String availableSlotsFor(String date);
+
+  /// No description provided for @bookNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get bookNow;
+
+  /// No description provided for @confirmBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Booking'**
+  String get confirmBooking;
+
+  /// No description provided for @selectTimeSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Time Slot'**
+  String get selectTimeSlot;
+
+  /// No description provided for @morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get morning;
+
+  /// No description provided for @afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get afternoon;
+
+  /// No description provided for @continueToPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to Payment'**
+  String get continueToPayment;
+
+  /// No description provided for @bookingPaymentSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Payment Summary'**
+  String get bookingPaymentSummary;
+
+  /// No description provided for @payNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Now'**
+  String get payNow;
+
+  /// No description provided for @bookingConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Confirmation'**
+  String get bookingConfirmation;
+
+  /// No description provided for @bookingSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Successful!'**
+  String get bookingSuccessful;
+
+  /// No description provided for @lesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson'**
+  String get lesson;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Home'**
+  String get backToHome;
+
+  /// No description provided for @adminAnalyticsDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Analytics Dashboard'**
+  String get adminAnalyticsDashboard;
+
+  /// No description provided for @totalBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Bookings'**
+  String get totalBookings;
+
+  /// No description provided for @revenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get revenue;
+
+  /// No description provided for @activeUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Users'**
+  String get activeUsers;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'this month'**
+  String get thisMonth;
+
+  /// No description provided for @filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filter;
+
+  /// No description provided for @upcomingLessons.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Lessons'**
+  String get upcomingLessons;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get seeAll;
+
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @noBookingsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Bookings Yet'**
+  String get noBookingsYet;
+
+  /// No description provided for @noBookingsYetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your motorcycle lesson bookings will appear here once scheduled.'**
+  String get noBookingsYetSubtitle;
+
+  /// No description provided for @signOutMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out? You will need to sign in again to manage your bookings.'**
+  String get signOutMessage;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @secureSSLEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure SSL Encrypted'**
+  String get secureSSLEncrypted;
+
+  /// No description provided for @termsAgreement.
+  ///
+  /// In en, this message translates to:
+  /// **'By tapping Pay Now, you agree to our Terms & Conditions.'**
+  String get termsAgreement;
 }
 
 class _AppLocalizationsDelegate

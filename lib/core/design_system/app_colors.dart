@@ -39,6 +39,23 @@ class AppColors {
   static const Color slotBlocked = Color(0xFFEF4444);
   static const Color slotLocked = Color(0xFF94A3B8);
 
+  // Navy (CTA buttons, admin header)
+  static const Color navy = Color(0xFF0F172A);
+  static const Color navyLight = Color(0xFF1E293B);
+
+  // Gradients
+  static const LinearGradient navyGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
+  );
+
+  static const LinearGradient blueGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+  );
+
   // Shimmer
   static const Color shimmerBase = Color(0xFFE2E8F0);
   static const Color shimmerHighlight = Color(0xFFF8FAFC);

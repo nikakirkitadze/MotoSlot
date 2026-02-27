@@ -74,17 +74,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 AppSpacing.verticalSm,
                 FadeInWidget(
+                  child: Center(
+                    child: AppLogo(
+                      variant: AppLogoVariant.iconWithMS,
+                      iconSize: 48,
+                    ),
+                  ),
+                ),
+                AppSpacing.verticalMd,
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 50),
                   child: Text(
                     context.l10n.joinMotoSlot,
-                    style: AppTypography.displayMedium,
+                    style: AppTypography.displayMedium.copyWith(
+                      color: AppColors.navy,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 AppSpacing.verticalSm,
                 FadeInWidget(
-                  delay: const Duration(milliseconds: 50),
+                  delay: const Duration(milliseconds: 100),
                   child: Text(
                     context.l10n.createAccountSubtitle,
                     style: AppTypography.bodyMedium,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 AppSpacing.verticalLg,
@@ -158,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 AppSpacing.verticalLg,
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
-                    return PrimaryButton(
+                    return NavyButton(
                       text: context.l10n.createAccount,
                       onPressed: _onRegister,
                       isLoading: state.isLoading,

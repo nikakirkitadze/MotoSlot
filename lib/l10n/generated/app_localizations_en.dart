@@ -647,4 +647,111 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get georgian => 'Georgian';
+
+  @override
+  String get logIn => 'Log In';
+
+  @override
+  String get emailAddress => 'Email Address';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get scheduleLesson => 'Schedule Lesson';
+
+  @override
+  String availableSlotsFor(String date) {
+    return 'Available Slots for $date';
+  }
+
+  @override
+  String get bookNow => 'Book Now';
+
+  @override
+  String get confirmBooking => 'Confirm Booking';
+
+  @override
+  String get selectTimeSlot => 'Select Time Slot';
+
+  @override
+  String get morning => 'Morning';
+
+  @override
+  String get afternoon => 'Afternoon';
+
+  @override
+  String get continueToPayment => 'Continue to Payment';
+
+  @override
+  String get bookingPaymentSummary => 'Booking Payment Summary';
+
+  @override
+  String get payNow => 'Pay Now';
+
+  @override
+  String get bookingConfirmation => 'Booking Confirmation';
+
+  @override
+  String get bookingSuccessful => 'Booking Successful!';
+
+  @override
+  String get lesson => 'Lesson';
+
+  @override
+  String get backToHome => 'Back to Home';
+
+  @override
+  String get adminAnalyticsDashboard => 'Admin Analytics Dashboard';
+
+  @override
+  String get totalBookings => 'Total Bookings';
+
+  @override
+  String get revenue => 'Revenue';
+
+  @override
+  String get activeUsers => 'Active Users';
+
+  @override
+  String get thisMonth => 'this month';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get upcomingLessons => 'Upcoming Lessons';
+
+  @override
+  String get seeAll => 'See All';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get users => 'Users';
+
+  @override
+  String get noBookingsYet => 'No Bookings Yet';
+
+  @override
+  String get noBookingsYetSubtitle =>
+      'Your motorcycle lesson bookings will appear here once scheduled.';
+
+  @override
+  String get signOutMessage =>
+      'Are you sure you want to sign out? You will need to sign in again to manage your bookings.';
+
+  @override
+  String get confirmed => 'Confirmed';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get secureSSLEncrypted => 'Secure SSL Encrypted';
+
+  @override
+  String get termsAgreement =>
+      'By tapping Pay Now, you agree to our Terms & Conditions.';
 }

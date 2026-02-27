@@ -122,8 +122,8 @@ class SlotDetailsScreen extends StatelessWidget {
                 delay: const Duration(milliseconds: 150),
                 child: BlocBuilder<BookingCubit, BookingState>(
                   builder: (context, state) {
-                    return PrimaryButton(
-                      text: context.l10n.payAndConfirmBooking,
+                    return NavyButton(
+                      text: context.l10n.continueToPayment,
                       onPressed: () => _onBookSlot(context),
                       isLoading: state.isLoading,
                       icon: Icons.payment_rounded,

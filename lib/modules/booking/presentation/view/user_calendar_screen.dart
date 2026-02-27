@@ -59,7 +59,7 @@ class _UserCalendarScreenState extends State<UserCalendarScreen> {
         lastDay: DateTime.now().add(const Duration(days: 90)),
         focusedDay: _focusedDay,
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-        calendarFormat: CalendarFormat.twoWeeks,
+        calendarFormat: CalendarFormat.month,
         startingDayOfWeek: StartingDayOfWeek.monday,
         headerStyle: HeaderStyle(
           formatButtonVisible: false,
@@ -80,27 +80,49 @@ class _UserCalendarScreenState extends State<UserCalendarScreen> {
           weekendTextStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
           todayDecoration: BoxDecoration(
             color: AppColors.primaryLight,
-            borderRadius: AppRadius.borderRadiusSm,
+            shape: BoxShape.circle,
           ),
           todayTextStyle: AppTypography.bodyMedium.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.w600,
           ),
           selectedDecoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: AppRadius.borderRadiusSm,
+            color: AppColors.navy,
+            shape: BoxShape.circle,
           ),
           selectedTextStyle: AppTypography.bodyMedium.copyWith(
             color: AppColors.textOnPrimary,
             fontWeight: FontWeight.w600,
           ),
           markerDecoration: BoxDecoration(
-            color: AppColors.slotAvailable,
+            color: AppColors.primary,
             shape: BoxShape.circle,
           ),
           markerSize: 5,
           markersMaxCount: 1,
           markerMargin: const EdgeInsets.only(top: 2),
+        ),
+        calendarBuilders: CalendarBuilders(
+          defaultBuilder: (context, day, focusedDay) {
+            final normalizedDay = DateTime(day.year, day.month, day.day);
+            final hasSlots = (slotsByDay[normalizedDay]?.isNotEmpty ?? false);
+            if (hasSlots) {
+              return Container(
+                margin: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    '${day.day}',
+                    style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
+                  ),
+                ),
+              );
+            }
+            return null;
+          },
         ),
         eventLoader: (day) {
           final normalizedDay = DateTime(day.year, day.month, day.day);
@@ -157,8 +179,11 @@ class _UserCalendarScreenState extends State<UserCalendarScreen> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 12, left: 4),
               child: Text(
-                context.l10n.availableOn(AppDateUtils.formatDate(selectedDate)),
-                style: AppTypography.titleMedium,
+                context.l10n.availableSlotsFor(AppDateUtils.formatDate(selectedDate)),
+                style: AppTypography.headlineMedium.copyWith(
+                  color: AppColors.navy,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             );
           }
@@ -175,53 +200,55 @@ class _UserCalendarScreenState extends State<UserCalendarScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: AppCard(
-        onTap: () => context.push('/slot-details', extra: slot),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Container(
-              width: 4,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.slotAvailable,
-                borderRadius: AppRadius.borderRadiusFull,
-              ),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppDateUtils.formatTimeRange(slot.startTime, slot.endTime),
-                    style: AppTypography.titleLarge,
+        padding: EdgeInsets.zero,
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Container(
+                width: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    context.l10n.minLesson(slot.durationMinutes),
-                    style: AppTypography.bodySmall,
-                  ),
-                  if (slot.location != null) ...[
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        const Icon(Icons.location_on_outlined,
-                            size: 13, color: AppColors.textHint),
-                        const SizedBox(width: 3),
-                        Text(slot.location!, style: AppTypography.bodySmall),
-                      ],
-                    ),
-                  ],
-                ],
+                ),
               ),
-            ),
-            AppBadge(
-              label: context.l10n.slotStatusAvailable,
-              color: AppColors.slotAvailable,
-            ),
-            const SizedBox(width: 6),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.textHint, size: 22),
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppDateUtils.formatTimeRange(slot.startTime, slot.endTime),
+                              style: AppTypography.titleLarge.copyWith(
+                                color: AppColors.navy,
+                              ),
+                            ),
+                            if (slot.instructorName != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                '${context.l10n.instructor}: ${slot.instructorName}',
+                                style: AppTypography.bodyMedium,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      OutlinedAppButton(
+                        text: context.l10n.bookNow,
+                        onPressed: () => context.push('/slot-details', extra: slot),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

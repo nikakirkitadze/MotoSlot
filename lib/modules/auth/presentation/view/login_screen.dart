@@ -73,49 +73,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Logo
                   FadeInWidget(
                     child: Center(
-                      child: Container(
-                        width: 72,
-                        height: 72,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: AppRadius.borderRadiusXl,
-                          boxShadow: AppShadows.primary,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'MS',
-                            style: AppTypography.headlineLarge.copyWith(
-                              color: AppColors.textOnPrimary,
-                            ),
-                          ),
-                        ),
+                      child: AppLogo(
+                        variant: AppLogoVariant.iconWithText,
+                        iconSize: 48,
                       ),
-                    ),
-                  ),
-                  AppSpacing.verticalLg,
-                  FadeInWidget(
-                    delay: const Duration(milliseconds: 100),
-                    child: Text(
-                      context.l10n.welcomeToMotoSlot,
-                      style: AppTypography.displayMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  AppSpacing.verticalSm,
-                  FadeInWidget(
-                    delay: const Duration(milliseconds: 150),
-                    child: Text(
-                      context.l10n.signInSubtitle,
-                      style: AppTypography.bodyMedium,
-                      textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(height: 40),
                   FadeInWidget(
+                    delay: const Duration(milliseconds: 100),
+                    child: Text(
+                      context.l10n.logIn,
+                      style: AppTypography.displayMedium.copyWith(
+                        color: AppColors.navy,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  FadeInWidget(
                     delay: const Duration(milliseconds: 200),
                     child: AppTextField(
-                      label: context.l10n.email,
-                      hint: context.l10n.emailHint,
+                      hint: context.l10n.emailAddress,
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: Validators.emailValidator(context),
@@ -127,8 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   FadeInWidget(
                     delay: const Duration(milliseconds: 250),
                     child: AppTextField(
-                      label: context.l10n.password,
-                      hint: context.l10n.passwordHint,
+                      hint: context.l10n.password,
                       controller: _passwordController,
                       obscureText: true,
                       validator: Validators.passwordValidator(context),
@@ -137,28 +115,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       onSubmitted: (_) => _onLogin(),
                     ),
                   ),
-                  AppSpacing.verticalSm,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GhostButton(
-                      text: context.l10n.forgotPassword,
-                      onPressed: () => context.push('/forgot-password'),
-                    ),
-                  ),
                   AppSpacing.verticalLg,
                   FadeInWidget(
                     delay: const Duration(milliseconds: 300),
                     child: BlocBuilder<AuthCubit, AuthState>(
                       builder: (context, state) {
-                        return PrimaryButton(
-                          text: context.l10n.signIn,
+                        return NavyButton(
+                          text: context.l10n.logIn,
                           onPressed: _onLogin,
                           isLoading: state.isLoading,
                         );
                       },
                     ),
                   ),
-                  AppSpacing.verticalLg,
+                  AppSpacing.verticalSm,
+                  Center(
+                    child: GhostButton(
+                      text: context.l10n.forgotPassword,
+                      onPressed: () => context.push('/forgot-password'),
+                    ),
+                  ),
+                  AppSpacing.verticalMd,
                   FadeInWidget(
                     delay: const Duration(milliseconds: 350),
                     child: Row(
@@ -169,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: AppTypography.bodyMedium,
                         ),
                         GhostButton(
-                          text: context.l10n.register,
+                          text: context.l10n.signUp,
                           onPressed: () => context.push('/register'),
                         ),
                       ],

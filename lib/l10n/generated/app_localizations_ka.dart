@@ -649,4 +649,111 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get georgian => 'ქართული';
+
+  @override
+  String get logIn => 'შესვლა';
+
+  @override
+  String get emailAddress => 'ელ. ფოსტის მისამართი';
+
+  @override
+  String get signUp => 'რეგისტრაცია';
+
+  @override
+  String get scheduleLesson => 'გაკვეთილის დაგეგმვა';
+
+  @override
+  String availableSlotsFor(String date) {
+    return 'ხელმისაწვდომი სლოტები $date-ისთვის';
+  }
+
+  @override
+  String get bookNow => 'დაჯავშნე';
+
+  @override
+  String get confirmBooking => 'ჯავშნის დადასტურება';
+
+  @override
+  String get selectTimeSlot => 'აირჩიეთ დრო';
+
+  @override
+  String get morning => 'დილა';
+
+  @override
+  String get afternoon => 'შუადღე';
+
+  @override
+  String get continueToPayment => 'გადახდაზე გადასვლა';
+
+  @override
+  String get bookingPaymentSummary => 'ჯავშნის გადახდის შეჯამება';
+
+  @override
+  String get payNow => 'გადაიხადე';
+
+  @override
+  String get bookingConfirmation => 'ჯავშნის დადასტურება';
+
+  @override
+  String get bookingSuccessful => 'ჯავშანი წარმატებულია!';
+
+  @override
+  String get lesson => 'გაკვეთილი';
+
+  @override
+  String get backToHome => 'მთავარზე დაბრუნება';
+
+  @override
+  String get adminAnalyticsDashboard => 'ადმინ ანალიტიკის დაფა';
+
+  @override
+  String get totalBookings => 'სულ ჯავშნები';
+
+  @override
+  String get revenue => 'შემოსავალი';
+
+  @override
+  String get activeUsers => 'აქტიური მომხმარებლები';
+
+  @override
+  String get thisMonth => 'ამ თვეში';
+
+  @override
+  String get filter => 'ფილტრი';
+
+  @override
+  String get upcomingLessons => 'მომავალი გაკვეთილები';
+
+  @override
+  String get seeAll => 'ყველას ნახვა';
+
+  @override
+  String get dashboard => 'მთავარი';
+
+  @override
+  String get users => 'მომხმარებლები';
+
+  @override
+  String get noBookingsYet => 'ჯავშნები ჯერ არ არის';
+
+  @override
+  String get noBookingsYetSubtitle =>
+      'თქვენი მოტოციკლის გაკვეთილების ჯავშნები აქ გამოჩნდება დაგეგმვის შემდეგ.';
+
+  @override
+  String get signOutMessage =>
+      'დარწმუნებული ხართ, რომ გსურთ გასვლა? ჯავშნების სამართავად ხელახლა შესვლა დაგჭირდებათ.';
+
+  @override
+  String get confirmed => 'დადასტურებული';
+
+  @override
+  String get pending => 'მოლოდინში';
+
+  @override
+  String get secureSSLEncrypted => 'დაცული SSL დაშიფვრა';
+
+  @override
+  String get termsAgreement =>
+      'გადახდაზე დაჭერით თქვენ ეთანხმებით ჩვენს წესებსა და პირობებს.';
 }

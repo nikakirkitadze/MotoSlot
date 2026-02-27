@@ -279,5 +279,47 @@
 
   "language": "Language",
   "english": "English",
-  "georgian": "Georgian"
+  "georgian": "Georgian",
+
+  "logIn": "Log In",
+  "emailAddress": "Email Address",
+  "signUp": "Sign Up",
+  "scheduleLesson": "Schedule Lesson",
+  "availableSlotsFor": "Available Slots for {date}",
+  "@availableSlotsFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookNow": "Book Now",
+  "confirmBooking": "Confirm Booking",
+  "selectTimeSlot": "Select Time Slot",
+  "morning": "Morning",
+  "afternoon": "Afternoon",
+  "continueToPayment": "Continue to Payment",
+  "bookingPaymentSummary": "Booking Payment Summary",
+  "payNow": "Pay Now",
+  "bookingConfirmation": "Booking Confirmation",
+  "bookingSuccessful": "Booking Successful!",
+  "lesson": "Lesson",
+  "backToHome": "Back to Home",
+  "adminAnalyticsDashboard": "Admin Analytics Dashboard",
+  "totalBookings": "Total Bookings",
+  "revenue": "Revenue",
+  "activeUsers": "Active Users",
+  "thisMonth": "this month",
+  "filter": "Filter",
+  "upcomingLessons": "Upcoming Lessons",
+  "seeAll": "See All",
+  "dashboard": "Dashboard",
+  "users": "Users",
+  "noBookingsYet": "No Bookings Yet",
+  "noBookingsYetSubtitle": "Your motorcycle lesson bookings will appear here once scheduled.",
+  "signOutMessage": "Are you sure you want to sign out? You will need to sign in again to manage your bookings.",
+  "confirmed": "Confirmed",
+  "pending": "Pending",
+  "secureSSLEncrypted": "Secure SSL Encrypted",
+  "termsAgreement": "By tapping Pay Now, you agree to our Terms & Conditions."
 }
