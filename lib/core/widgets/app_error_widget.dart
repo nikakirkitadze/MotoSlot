@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
-import 'package:moto_slot/core/widgets/app_button.dart';
 
 class AppErrorWidget extends StatelessWidget {
   final String message;
@@ -23,23 +22,31 @@ class AppErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon ?? Icons.error_outline,
-              size: 64,
-              color: AppTheme.errorColor.withValues(alpha: 0.7),
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: AppColors.errorLight,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon ?? Icons.error_outline_rounded,
+                size: 36,
+                color: AppColors.error,
+              ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.verticalMd,
             Text(
               message,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: AppTypography.bodyLarge,
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
-              const SizedBox(height: 24),
-              AppButton(
+              AppSpacing.verticalLg,
+              PrimaryButton(
                 text: context.l10n.retry,
                 onPressed: onRetry,
-                icon: Icons.refresh,
+                icon: Icons.refresh_rounded,
                 width: 160,
               ),
             ],

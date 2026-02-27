@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
-import 'package:moto_slot/core/widgets/widgets.dart';
 import 'package:moto_slot/modules/booking/presentation/cubit/booking_cubit.dart';
 
 class PaymentWebViewScreen extends StatefulWidget {
@@ -62,27 +62,67 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.securePayment),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            context.read<BookingCubit>().handlePaymentResult(
-                  transactionId: '',
-                  isSuccess: false,
-                );
-            context.pop();
-          },
-        ),
-      ),
-      body: Stack(
-        children: [
-          WebViewWidget(controller: _controller),
-          if (_isLoading)
-            Center(
-              child: AppLoading(message: context.l10n.loadingPaymentPage),
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Custom header
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 8, 8, 0),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close_rounded, color: AppColors.textPrimary),
+                    onPressed: () {
+                      context.read<BookingCubit>().handlePaymentResult(
+                            transactionId: '',
+                            isSuccess: false,
+                          );
+                      context.pop();
+                    },
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      context.l10n.securePayment,
+                      style: AppTypography.headlineMedium,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.successLight,
+                      borderRadius: AppRadius.borderRadiusFull,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.lock_rounded, size: 14, color: AppColors.success),
+                        const SizedBox(width: 4),
+                        Text(
+                          'SSL',
+                          style: AppTypography.labelMedium.copyWith(color: AppColors.success),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                ],
+              ),
             ),
-        ],
+            // Loading progress
+            if (_isLoading)
+              LinearProgressIndicator(
+                color: AppColors.primary,
+                backgroundColor: AppColors.primaryLight,
+                minHeight: 2,
+              ),
+            // WebView
+            Expanded(
+              child: WebViewWidget(controller: _controller),
+            ),
+          ],
+        ),
       ),
     );
   }

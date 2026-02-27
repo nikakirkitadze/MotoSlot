@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/constants/app_constants.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/locale/locale_cubit.dart';
@@ -27,7 +27,7 @@ class _AdminSettingsScreenState extends State<AdminSettingsScreen> {
   final _endTimeController = TextEditingController(text: '18:00');
   int _lessonDuration = 60;
   int _bufferMinutes = 15;
-  final Set<int> _workingDays = {1, 2, 3, 4, 5}; // Mon-Fri
+  final Set<int> _workingDays = {1, 2, 3, 4, 5};
 
   DateTime? _generateFromDate;
   DateTime? _generateToDate;
@@ -39,8 +39,7 @@ class _AdminSettingsScreenState extends State<AdminSettingsScreen> {
   }
 
   void _loadExistingConfig() {
-    final config =
-        context.read<AdminAvailabilityCubit>().state.config;
+    final config = context.read<AdminAvailabilityCubit>().state.config;
     if (config != null) {
       _instructorController.text = config.instructorName ?? '';
       _locationController.text = config.location ?? '';
@@ -74,7 +73,7 @@ class _AdminSettingsScreenState extends State<AdminSettingsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(localizeMessage(context, state.successMessage!)),
-              backgroundColor: AppTheme.successColor,
+              backgroundColor: AppColors.success,
             ),
           );
           context.read<AdminAvailabilityCubit>().clearMessages();
@@ -83,7 +82,7 @@ class _AdminSettingsScreenState extends State<AdminSettingsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(localizeMessage(context, state.errorMessage!)),
-              backgroundColor: AppTheme.errorColor,
+              backgroundColor: AppColors.error,
             ),
           );
           context.read<AdminAvailabilityCubit>().clearMessages();
@@ -93,220 +92,280 @@ class _AdminSettingsScreenState extends State<AdminSettingsScreen> {
         return AppLoadingOverlay(
           isLoading: state.isLoading,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: AppSpacing.screenPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                AppSpacing.verticalSm,
                 // Language toggle
-                Text(context.l10n.language,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 8),
-                BlocBuilder<LocaleCubit, LocaleState>(
-                  builder: (context, localeState) {
-                    return SegmentedButton<String>(
-                      segments: [
-                        ButtonSegment(
-                          value: 'ka',
-                          label: Text(context.l10n.georgian),
-                        ),
-                        ButtonSegment(
-                          value: 'en',
-                          label: Text(context.l10n.english),
-                        ),
-                      ],
-                      selected: {localeState.locale.languageCode},
-                      onSelectionChanged: (selected) {
-                        context.read<LocaleCubit>().setLocale(
-                              Locale(selected.first),
-                            );
-                      },
-                    );
-                  },
+                AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.l10n.language, style: AppTypography.titleLarge),
+                      AppSpacing.verticalSm,
+                      BlocBuilder<LocaleCubit, LocaleState>(
+                        builder: (context, localeState) {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: SegmentedButton<String>(
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusMd),
+                                ),
+                              ),
+                              segments: [
+                                ButtonSegment(
+                                  value: 'ka',
+                                  label: Text(context.l10n.georgian, style: AppTypography.titleSmall),
+                                ),
+                                ButtonSegment(
+                                  value: 'en',
+                                  label: Text(context.l10n.english, style: AppTypography.titleSmall),
+                                ),
+                              ],
+                              selected: {localeState.locale.languageCode},
+                              onSelectionChanged: (selected) {
+                                context.read<LocaleCubit>().setLocale(
+                                      Locale(selected.first),
+                                    );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 24),
-                const Divider(),
-                const SizedBox(height: 24),
-                Text(context.l10n.availabilitySettings,
-                    style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: 24),
+                AppSpacing.verticalMd,
+                // Availability Settings
+                Text(context.l10n.availabilitySettings, style: AppTypography.headlineMedium),
+                AppSpacing.verticalMd,
                 // Working days
-                Text(context.l10n.workingDays,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  children: DayOfWeek.values.map((day) {
-                    return FilterChip(
-                      label: Text(day.localizedLabel(context).substring(0, 3)),
-                      selected: _workingDays.contains(day.value),
-                      selectedColor: AppTheme.primaryLight,
-                      checkmarkColor: AppTheme.primaryColor,
-                      onSelected: (selected) {
-                        setState(() {
-                          if (selected) {
-                            _workingDays.add(day.value);
-                          } else {
-                            _workingDays.remove(day.value);
-                          }
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                // Time range
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        label: context.l10n.startTime,
-                        hint: '09:00',
-                        controller: _startTimeController,
-                        prefixIcon:
-                            const Icon(Icons.access_time, size: 20),
-                        onSubmitted: (_) {},
+                AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.l10n.workingDays, style: AppTypography.titleLarge),
+                      AppSpacing.verticalSm,
+                      Wrap(
+                        spacing: 8,
+                        children: DayOfWeek.values.map((day) {
+                          final isSelected = _workingDays.contains(day.value);
+                          return FilterChip(
+                            label: Text(
+                              day.localizedLabel(context).substring(0, 3),
+                              style: AppTypography.labelMedium.copyWith(
+                                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                              ),
+                            ),
+                            selected: isSelected,
+                            selectedColor: AppColors.primaryLight,
+                            checkmarkColor: AppColors.primary,
+                            backgroundColor: AppColors.surfaceVariant,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusSm),
+                            onSelected: (selected) {
+                              setState(() {
+                                if (selected) {
+                                  _workingDays.add(day.value);
+                                } else {
+                                  _workingDays.remove(day.value);
+                                }
+                              });
+                            },
+                          );
+                        }).toList(),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: AppTextField(
-                        label: context.l10n.endTime,
-                        hint: '18:00',
-                        controller: _endTimeController,
-                        prefixIcon:
-                            const Icon(Icons.access_time, size: 20),
-                        onSubmitted: (_) {},
+                    ],
+                  ),
+                ),
+                AppSpacing.verticalMd,
+                // Time & Duration
+                AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppTextField(
+                              label: context.l10n.startTime,
+                              hint: '09:00',
+                              controller: _startTimeController,
+                              prefixIcon: const Icon(Icons.access_time_rounded, size: 20),
+                              onSubmitted: (_) {},
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: AppTextField(
+                              label: context.l10n.endTime,
+                              hint: '18:00',
+                              controller: _endTimeController,
+                              prefixIcon: const Icon(Icons.access_time_rounded, size: 20),
+                              onSubmitted: (_) {},
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      AppSpacing.verticalMd,
+                      Text(context.l10n.lessonDuration, style: AppTypography.titleMedium),
+                      AppSpacing.verticalSm,
+                      Wrap(
+                        spacing: 8,
+                        children: AppConstants.lessonDurations.map((duration) {
+                          final isSelected = _lessonDuration == duration;
+                          return ChoiceChip(
+                            label: Text(
+                              context.l10n.minutesShort(duration),
+                              style: AppTypography.labelMedium.copyWith(
+                                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                              ),
+                            ),
+                            selected: isSelected,
+                            selectedColor: AppColors.primaryLight,
+                            backgroundColor: AppColors.surfaceVariant,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusSm),
+                            onSelected: (_) {
+                              setState(() => _lessonDuration = duration);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      AppSpacing.verticalMd,
+                      Text(context.l10n.bufferBetweenLessons, style: AppTypography.titleMedium),
+                      AppSpacing.verticalSm,
+                      Wrap(
+                        spacing: 8,
+                        children: [0, 10, 15, 20, 30].map((mins) {
+                          final isSelected = _bufferMinutes == mins;
+                          return ChoiceChip(
+                            label: Text(
+                              mins == 0
+                                  ? context.l10n.none
+                                  : context.l10n.minutesShort(mins),
+                              style: AppTypography.labelMedium.copyWith(
+                                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                              ),
+                            ),
+                            selected: isSelected,
+                            selectedColor: AppColors.primaryLight,
+                            backgroundColor: AppColors.surfaceVariant,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusSm),
+                            onSelected: (_) {
+                              setState(() => _bufferMinutes = mins);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                // Lesson duration
-                Text(context.l10n.lessonDuration,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  children: AppConstants.lessonDurations.map((duration) {
-                    return ChoiceChip(
-                      label: Text(context.l10n.minutesShort(duration)),
-                      selected: _lessonDuration == duration,
-                      selectedColor: AppTheme.primaryLight,
-                      onSelected: (_) {
-                        setState(() => _lessonDuration = duration);
-                      },
-                    );
-                  }).toList(),
+                AppSpacing.verticalMd,
+                // Instructor & Location
+                AppCard(
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        label: context.l10n.instructorName,
+                        hint: context.l10n.instructorNameHint,
+                        controller: _instructorController,
+                        prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
+                      ),
+                      AppSpacing.verticalMd,
+                      AppTextField(
+                        label: context.l10n.defaultLocation,
+                        hint: context.l10n.defaultLocationHint,
+                        controller: _locationController,
+                        prefixIcon: const Icon(Icons.location_on_outlined, size: 20),
+                      ),
+                      AppSpacing.verticalMd,
+                      AppTextField(
+                        label: context.l10n.contactPhone,
+                        hint: context.l10n.contactPhoneHint,
+                        controller: _contactPhoneController,
+                        keyboardType: TextInputType.phone,
+                        prefixIcon: const Icon(Icons.phone_outlined, size: 20),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                // Buffer time
-                Text(context.l10n.bufferBetweenLessons,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  children: [0, 10, 15, 20, 30].map((mins) {
-                    return ChoiceChip(
-                      label: Text(mins == 0
-                          ? context.l10n.none
-                          : context.l10n.minutesShort(mins)),
-                      selected: _bufferMinutes == mins,
-                      selectedColor: AppTheme.primaryLight,
-                      onSelected: (_) {
-                        setState(() => _bufferMinutes = mins);
-                      },
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                // Instructor and location
-                AppTextField(
-                  label: context.l10n.instructorName,
-                  hint: context.l10n.instructorNameHint,
-                  controller: _instructorController,
-                  prefixIcon:
-                      const Icon(Icons.person_outline, size: 20),
-                ),
-                const SizedBox(height: 16),
-                AppTextField(
-                  label: context.l10n.defaultLocation,
-                  hint: context.l10n.defaultLocationHint,
-                  controller: _locationController,
-                  prefixIcon:
-                      const Icon(Icons.location_on_outlined, size: 20),
-                ),
-                const SizedBox(height: 16),
-                AppTextField(
-                  label: context.l10n.contactPhone,
-                  hint: context.l10n.contactPhoneHint,
-                  controller: _contactPhoneController,
-                  keyboardType: TextInputType.phone,
-                  prefixIcon:
-                      const Icon(Icons.phone_outlined, size: 20),
-                ),
-                const SizedBox(height: 24),
-                AppButton(
+                AppSpacing.verticalMd,
+                PrimaryButton(
                   text: context.l10n.saveSettings,
                   onPressed: _onSaveSettings,
-                  icon: Icons.save,
+                  icon: Icons.save_rounded,
                 ),
-                const SizedBox(height: 32),
-                const Divider(),
-                const SizedBox(height: 24),
-                // Generate slots
-                Text(context.l10n.generateSlots,
-                    style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: 8),
+                AppSpacing.verticalXl,
+                // Generate slots section
+                Text(context.l10n.generateSlots, style: AppTypography.headlineMedium),
+                AppSpacing.verticalSm,
                 Text(
                   context.l10n.generateSlotsSubtitle,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: AppTypography.bodyMedium,
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => _pickDate(true),
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                            labelText: context.l10n.from,
-                            prefixIcon:
-                                const Icon(Icons.calendar_today, size: 18),
+                AppSpacing.verticalMd,
+                AppCard(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () => _pickDate(true),
+                              borderRadius: AppRadius.borderRadiusMd,
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: context.l10n.from,
+                                  labelStyle: AppTypography.bodySmall,
+                                  prefixIcon: const Icon(Icons.calendar_today_rounded, size: 18),
+                                ),
+                                child: Text(
+                                  _generateFromDate != null
+                                      ? '${_generateFromDate!.day}/${_generateFromDate!.month}/${_generateFromDate!.year}'
+                                      : context.l10n.select,
+                                  style: AppTypography.bodyLarge,
+                                ),
+                              ),
+                            ),
                           ),
-                          child: Text(_generateFromDate != null
-                              ? '${_generateFromDate!.day}/${_generateFromDate!.month}/${_generateFromDate!.year}'
-                              : context.l10n.select),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => _pickDate(false),
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                            labelText: context.l10n.to,
-                            prefixIcon:
-                                const Icon(Icons.calendar_today, size: 18),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () => _pickDate(false),
+                              borderRadius: AppRadius.borderRadiusMd,
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: context.l10n.to,
+                                  labelStyle: AppTypography.bodySmall,
+                                  prefixIcon: const Icon(Icons.calendar_today_rounded, size: 18),
+                                ),
+                                child: Text(
+                                  _generateToDate != null
+                                      ? '${_generateToDate!.day}/${_generateToDate!.month}/${_generateToDate!.year}'
+                                      : context.l10n.select,
+                                  style: AppTypography.bodyLarge,
+                                ),
+                              ),
+                            ),
                           ),
-                          child: Text(_generateToDate != null
-                              ? '${_generateToDate!.day}/${_generateToDate!.month}/${_generateToDate!.year}'
-                              : context.l10n.select),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
+                      AppSpacing.verticalMd,
+                      SecondaryButton(
+                        text: context.l10n.generateSlots,
+                        onPressed: _generateFromDate != null && _generateToDate != null
+                            ? _onGenerateSlots
+                            : null,
+                        icon: Icons.auto_awesome_rounded,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 16),
-                AppButton(
-                  text: context.l10n.generateSlots,
-                  onPressed: _generateFromDate != null &&
-                          _generateToDate != null
-                      ? _onGenerateSlots
-                      : null,
-                  icon: Icons.auto_awesome,
-                  isOutlined: true,
-                ),
+                AppSpacing.verticalXl,
               ],
             ),
           ),

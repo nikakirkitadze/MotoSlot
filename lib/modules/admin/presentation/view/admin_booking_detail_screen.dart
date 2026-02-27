@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
-import 'package:moto_slot/core/widgets/widgets.dart';
 import 'package:moto_slot/modules/admin/presentation/cubit/admin_bookings_cubit.dart';
 import 'package:moto_slot/modules/booking/domain/model/booking.dart';
 
@@ -15,131 +14,133 @@ class AdminBookingDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(booking.bookingReference),
-      ),
+    return AppScaffold(
+      hasBackButton: true,
+      title: booking.bookingReference,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: AppSpacing.screenPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            AppSpacing.verticalSm,
             // Status
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            FadeInWidget(
+              child: AppCard(
                 child: Column(
                   children: [
-                    StatusBadge.fromBookingStatus(booking.status, context),
-                    const SizedBox(height: 8),
-                    if (booking.isManualBooking)
-                      Text(
-                        context.l10n.manualBooking,
-                        style: const TextStyle(
-                          color: AppTheme.warningColor,
-                          fontSize: 12,
-                        ),
+                    AppBadge.fromBookingStatus(booking.status, context),
+                    if (booking.isManualBooking) ...[
+                      AppSpacing.verticalSm,
+                      AppBadge(
+                        label: context.l10n.manualBooking,
+                        color: AppColors.warning,
                       ),
+                    ],
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.verticalMd,
             // User info
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            FadeInWidget(
+              delay: const Duration(milliseconds: 100),
+              child: AppCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.userInformation,
-                        style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 16),
-                    _buildRow(context, Icons.person_outline, context.l10n.name,
+                    Text(context.l10n.userInformation, style: AppTypography.titleLarge),
+                    AppSpacing.verticalMd,
+                    _buildRow(context, Icons.person_outline_rounded, context.l10n.name,
                         booking.userFullName),
-                    const Divider(height: 20),
+                    _divider(),
                     _buildRow(context, Icons.email_outlined, context.l10n.email,
                         booking.userEmail),
-                    const Divider(height: 20),
+                    _divider(),
                     _buildRow(context, Icons.phone_outlined, context.l10n.phone,
                         booking.userPhone),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.verticalMd,
             // Lesson info
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            FadeInWidget(
+              delay: const Duration(milliseconds: 150),
+              child: AppCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.lessonDetails,
-                        style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 16),
-                    _buildRow(context, Icons.calendar_today, context.l10n.date,
+                    Text(context.l10n.lessonDetails, style: AppTypography.titleLarge),
+                    AppSpacing.verticalMd,
+                    _buildRow(context, Icons.calendar_today_rounded, context.l10n.date,
                         AppDateUtils.formatDate(booking.startTime)),
-                    const Divider(height: 20),
-                    _buildRow(
-                      context,
-                      Icons.access_time,
-                      context.l10n.time,
-                      AppDateUtils.formatTimeRange(
-                        booking.startTime,
-                        booking.endTime,
-                      ),
-                    ),
-                    const Divider(height: 20),
+                    _divider(),
+                    _buildRow(context, Icons.access_time_rounded, context.l10n.time,
+                        AppDateUtils.formatTimeRange(booking.startTime, booking.endTime)),
+                    _divider(),
                     _buildRow(context, Icons.timer_outlined, context.l10n.duration,
                         context.l10n.minutesShort(booking.durationMinutes)),
                     if (booking.instructorName != null) ...[
-                      const Divider(height: 20),
-                      _buildRow(context, Icons.school, context.l10n.instructor,
+                      _divider(),
+                      _buildRow(context, Icons.school_rounded, context.l10n.instructor,
                           booking.instructorName!),
                     ],
                     if (booking.location != null) ...[
-                      const Divider(height: 20),
+                      _divider(),
                       _buildRow(context, Icons.location_on_outlined,
                           context.l10n.location, booking.location!),
                     ],
                     if (booking.amount != null) ...[
-                      const Divider(height: 20),
-                      _buildRow(context, Icons.payment, context.l10n.amount,
+                      _divider(),
+                      _buildRow(context, Icons.payment_rounded, context.l10n.amount,
                           context.l10n.gelCurrency(booking.amount!.toStringAsFixed(2))),
                     ],
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            AppSpacing.verticalLg,
             // Actions
             if (booking.isConfirmed) ...[
-              AppButton(
-                text: context.l10n.markAsCompleted,
-                onPressed: () => _completeBooking(context),
-                backgroundColor: AppTheme.successColor,
-                icon: Icons.check_circle,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: PrimaryButton(
+                  text: context.l10n.markAsCompleted,
+                  onPressed: () => _completeBooking(context),
+                  icon: Icons.check_circle_rounded,
+                ),
               ),
-              const SizedBox(height: 12),
-              AppButton(
-                text: context.l10n.cancelBooking,
-                onPressed: () => _cancelBooking(context),
-                backgroundColor: AppTheme.errorColor,
-                icon: Icons.cancel,
+              AppSpacing.verticalSm,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 250),
+                child: SecondaryButton(
+                  text: context.l10n.cancelBooking,
+                  onPressed: () => _cancelBooking(context),
+                  icon: Icons.cancel_rounded,
+                ),
               ),
             ],
             if (booking.isPending) ...[
-              AppButton(
-                text: context.l10n.cancelBooking,
-                onPressed: () => _cancelBooking(context),
-                backgroundColor: AppTheme.errorColor,
-                icon: Icons.cancel,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: PrimaryButton(
+                  text: context.l10n.cancelBooking,
+                  onPressed: () => _cancelBooking(context),
+                  icon: Icons.cancel_rounded,
+                ),
               ),
             ],
+            AppSpacing.verticalLg,
           ],
         ),
       ),
+    );
+  }
+
+  Widget _divider() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Divider(height: 1, color: AppColors.divider),
     );
   }
 
@@ -151,14 +152,22 @@ class AdminBookingDetailScreen extends StatelessWidget {
   ) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: AppTheme.primaryColor),
+        Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: AppColors.primaryLight,
+            borderRadius: AppRadius.borderRadiusSm,
+          ),
+          child: Icon(icon, size: 18, color: AppColors.primary),
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: Theme.of(context).textTheme.bodySmall),
-              Text(value, style: Theme.of(context).textTheme.titleSmall),
+              Text(label, style: AppTypography.bodySmall),
+              Text(value, style: AppTypography.titleMedium),
             ],
           ),
         ),
@@ -170,8 +179,9 @@ class AdminBookingDetailScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.l10n.cancelBookingConfirmTitle),
-        content: Text(context.l10n.cancelBookingAdminMessage),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusLg),
+        title: Text(context.l10n.cancelBookingConfirmTitle, style: AppTypography.headlineSmall),
+        content: Text(context.l10n.cancelBookingAdminMessage, style: AppTypography.bodyMedium),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -187,7 +197,7 @@ class AdminBookingDetailScreen extends StatelessWidget {
               context.pop();
             },
             child: Text(context.l10n.cancel,
-                style: const TextStyle(color: AppTheme.errorColor)),
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:moto_slot/core/design_system/design_system.dart';
+import 'package:moto_slot/core/design_system/app_colors.dart';
+import 'package:moto_slot/core/design_system/app_radius.dart';
+import 'package:moto_slot/core/design_system/app_typography.dart';
 
-class AppTextField extends StatefulWidget {
+class DSTextField extends StatefulWidget {
   final String? label;
   final String? hint;
   final TextEditingController? controller;
@@ -20,7 +22,7 @@ class AppTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
 
-  const AppTextField({
+  const DSTextField({
     super.key,
     this.label,
     this.hint,
@@ -41,10 +43,10 @@ class AppTextField extends StatefulWidget {
   });
 
   @override
-  State<AppTextField> createState() => _AppTextFieldState();
+  State<DSTextField> createState() => _DSTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> {
+class _DSTextFieldState extends State<DSTextField> {
   late bool _obscured;
 
   @override
@@ -95,6 +97,34 @@ class _AppTextFieldState extends State<AppTextField> {
                     onPressed: () => setState(() => _obscured = !_obscured),
                   )
                 : widget.suffixIcon,
+            filled: true,
+            fillColor: AppColors.surface,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            border: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: const BorderSide(color: AppColors.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: AppRadius.borderRadiusMd,
+              borderSide: BorderSide(color: AppColors.border.withValues(alpha: 0.5)),
+            ),
+            errorStyle: AppTypography.bodySmall.copyWith(color: AppColors.error),
           ),
         ),
       ],

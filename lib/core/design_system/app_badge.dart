@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:moto_slot/core/design_system/design_system.dart';
+import 'package:moto_slot/core/design_system/app_colors.dart';
+import 'package:moto_slot/core/design_system/app_radius.dart';
+import 'package:moto_slot/core/design_system/app_typography.dart';
 import 'package:moto_slot/core/utils/enums.dart';
 import 'package:moto_slot/core/utils/enum_l10n.dart';
 
-class StatusBadge extends StatelessWidget {
+class AppBadge extends StatelessWidget {
   final String label;
   final Color color;
+  final Color? backgroundColor;
 
-  const StatusBadge({
+  const AppBadge({
     super.key,
     required this.label,
     required this.color,
+    this.backgroundColor,
   });
 
-  factory StatusBadge.fromBookingStatus(BookingStatus status, BuildContext context) {
-    return StatusBadge(
+  factory AppBadge.fromBookingStatus(BookingStatus status, BuildContext context) {
+    final color = _bookingStatusColor(status);
+    return AppBadge(
       label: status.localizedLabel(context),
-      color: _bookingStatusColor(status),
+      color: color,
+      backgroundColor: color.withValues(alpha: 0.1),
     );
   }
 
-  factory StatusBadge.fromSlotStatus(SlotStatus status, BuildContext context) {
-    return StatusBadge(
+  factory AppBadge.fromSlotStatus(SlotStatus status, BuildContext context) {
+    final color = _slotStatusColor(status);
+    return AppBadge(
       label: status.localizedLabel(context),
-      color: _slotStatusColor(status),
+      color: color,
+      backgroundColor: color.withValues(alpha: 0.1),
     );
   }
 
@@ -60,7 +68,7 @@ class StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: backgroundColor ?? color.withValues(alpha: 0.1),
         borderRadius: AppRadius.borderRadiusFull,
       ),
       child: Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/locale/locale_cubit.dart';
 import 'package:moto_slot/modules/auth/presentation/cubit/auth_cubit.dart';
@@ -33,112 +33,140 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.l10n.appName),
-          actions: [
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                return PopupMenuButton<String>(
-                  icon: CircleAvatar(
-                    radius: 16,
-                    backgroundColor: AppTheme.primaryLight,
-                    child: Text(
-                      state.user?.fullName.isNotEmpty == true
-                          ? state.user!.fullName[0].toUpperCase()
-                          : 'U',
-                      style: const TextStyle(
-                        color: AppTheme.primaryDark,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Custom header
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 12, 8, 4),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.l10n.appName,
+                        style: AppTypography.headlineLarge,
                       ),
                     ),
-                  ),
-                  onSelected: (value) {
-                    if (value == 'logout') {
-                      _showLogoutDialog();
-                    } else if (value == 'language') {
-                      context.read<LocaleCubit>().toggleLocale();
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      enabled: false,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            state.user?.fullName ?? '',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.textPrimary,
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        return PopupMenuButton<String>(
+                          offset: const Offset(0, 48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadius.borderRadiusLg,
+                          ),
+                          icon: Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryLight,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                state.user?.fullName.isNotEmpty == true
+                                    ? state.user!.fullName[0].toUpperCase()
+                                    : 'U',
+                                style: AppTypography.titleMedium.copyWith(
+                                  color: AppColors.primary,
+                                ),
+                              ),
                             ),
                           ),
-                          Text(
-                            state.user?.email ?? '',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textSecondary,
+                          onSelected: (value) {
+                            if (value == 'logout') {
+                              _showLogoutDialog();
+                            } else if (value == 'language') {
+                              context.read<LocaleCubit>().toggleLocale();
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              enabled: false,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    state.user?.fullName ?? '',
+                                    style: AppTypography.titleMedium,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    state.user?.email ?? '',
+                                    style: AppTypography.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuDivider(),
-                    PopupMenuItem(
-                      value: 'language',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.language, size: 20, color: AppTheme.textSecondary),
-                          const SizedBox(width: 8),
-                          Text(context.l10n.language),
-                          const Spacer(),
-                          Text(
-                            context.l10n.localeName == 'ka'
-                                ? context.l10n.georgian
-                                : context.l10n.english,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textHint,
+                            const PopupMenuDivider(),
+                            PopupMenuItem(
+                              value: 'language',
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.language_rounded, size: 20, color: AppColors.textSecondary),
+                                  const SizedBox(width: 10),
+                                  Text(context.l10n.language, style: AppTypography.bodyLarge),
+                                  const Spacer(),
+                                  Text(
+                                    context.l10n.localeName == 'ka'
+                                        ? context.l10n.georgian
+                                        : context.l10n.english,
+                                    style: AppTypography.labelMedium,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                            const PopupMenuDivider(),
+                            PopupMenuItem(
+                              value: 'logout',
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.logout_rounded, size: 20, color: AppColors.error),
+                                  const SizedBox(width: 10),
+                                  Text(context.l10n.signOut,
+                                      style: AppTypography.bodyLarge.copyWith(color: AppColors.error)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    const PopupMenuDivider(),
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.logout, size: 20, color: AppTheme.errorColor),
-                          const SizedBox(width: 8),
-                          Text(context.l10n.signOut,
-                              style: const TextStyle(color: AppTheme.errorColor)),
-                        ],
-                      ),
-                    ),
+                    const SizedBox(width: 4),
                   ],
-                );
-              },
-            ),
-            const SizedBox(width: 8),
-          ],
+                ),
+              ),
+              Expanded(child: _screens[_currentIndex]),
+            ],
+          ),
         ),
-        body: _screens[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.calendar_month_outlined),
-              activeIcon: const Icon(Icons.calendar_month),
-              label: context.l10n.book,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.receipt_long_outlined),
-              activeIcon: const Icon(Icons.receipt_long),
-              label: context.l10n.myBookings,
-            ),
-          ],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            border: const Border(top: BorderSide(color: AppColors.border, width: 1)),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            selectedItemColor: AppColors.primary,
+            unselectedItemColor: AppColors.textHint,
+            selectedLabelStyle: AppTypography.labelMedium.copyWith(color: AppColors.primary),
+            unselectedLabelStyle: AppTypography.labelMedium,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.calendar_month_outlined),
+                activeIcon: const Icon(Icons.calendar_month),
+                label: context.l10n.book,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.receipt_long_outlined),
+                activeIcon: const Icon(Icons.receipt_long),
+                label: context.l10n.myBookings,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -148,8 +176,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.l10n.signOutConfirmTitle),
-        content: Text(context.l10n.signOutConfirmMessage),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusLg),
+        title: Text(context.l10n.signOutConfirmTitle, style: AppTypography.headlineSmall),
+        content: Text(context.l10n.signOutConfirmMessage, style: AppTypography.bodyMedium),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -161,7 +190,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               context.read<AuthCubit>().signOut();
             },
             child: Text(context.l10n.signOut,
-                style: const TextStyle(color: AppTheme.errorColor)),
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

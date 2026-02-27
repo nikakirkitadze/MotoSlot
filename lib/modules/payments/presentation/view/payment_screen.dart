@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/locale/cubit_l10n.dart';
 import 'package:moto_slot/core/utils/enums.dart';
-import 'package:moto_slot/core/widgets/widgets.dart';
 import 'package:moto_slot/modules/booking/domain/model/booking.dart';
 import 'package:moto_slot/modules/booking/presentation/cubit/booking_cubit.dart';
 import 'package:moto_slot/modules/booking/presentation/cubit/booking_state.dart';
@@ -26,92 +25,96 @@ class PaymentScreen extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(localizeMessage(context, state.errorMessage!)),
-              backgroundColor: AppTheme.errorColor,
+              backgroundColor: AppColors.error,
             ),
           );
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.l10n.payment),
-          leading: IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              _showCancelDialog(context);
-            },
-          ),
+      child: AppScaffold(
+        leading: IconButton(
+          icon: const Icon(Icons.close_rounded, color: AppColors.textPrimary),
+          onPressed: () => _showCancelDialog(context),
         ),
+        title: context.l10n.payment,
         body: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: AppSpacing.screenPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
+              AppSpacing.verticalSm,
+              FadeInWidget(
+                child: AppCard(
                   child: Column(
                     children: [
                       Text(
                         context.l10n.amountDue,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: AppTypography.bodyMedium,
                       ),
-                      const SizedBox(height: 8),
+                      AppSpacing.verticalSm,
                       Text(
                         context.l10n.gelCurrency(
                             booking.amount?.toStringAsFixed(2) ?? '0.00'),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge
-                            ?.copyWith(
-                              color: AppTheme.primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: AppTypography.displayLarge.copyWith(
+                          color: AppColors.primary,
+                        ),
                       ),
-                      const SizedBox(height: 8),
+                      AppSpacing.verticalSm,
                       Text(
                         context.l10n.refLabel(booking.bookingReference),
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: AppTypography.bodySmall,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
-              Text(
-                context.l10n.selectPaymentMethod,
-                style: Theme.of(context).textTheme.titleMedium,
+              AppSpacing.verticalLg,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 100),
+                child: Text(
+                  context.l10n.selectPaymentMethod,
+                  style: AppTypography.titleLarge,
+                ),
               ),
-              const SizedBox(height: 16),
-              _buildPaymentOption(
-                context,
-                provider: PaymentProvider.tbc,
-                title: context.l10n.tbcBank,
-                subtitle: context.l10n.payWithTbcCard,
-                icon: Icons.account_balance,
+              AppSpacing.verticalMd,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 150),
+                child: _buildPaymentOption(
+                  context,
+                  provider: PaymentProvider.tbc,
+                  title: context.l10n.tbcBank,
+                  subtitle: context.l10n.payWithTbcCard,
+                  icon: Icons.account_balance_rounded,
+                ),
               ),
-              const SizedBox(height: 12),
-              _buildPaymentOption(
-                context,
-                provider: PaymentProvider.bog,
-                title: context.l10n.bankOfGeorgia,
-                subtitle: context.l10n.payWithBogCard,
-                icon: Icons.account_balance,
+              AppSpacing.verticalSm,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: _buildPaymentOption(
+                  context,
+                  provider: PaymentProvider.bog,
+                  title: context.l10n.bankOfGeorgia,
+                  subtitle: context.l10n.payWithBogCard,
+                  icon: Icons.account_balance_rounded,
+                ),
               ),
               const Spacer(),
               BlocBuilder<BookingCubit, BookingState>(
                 builder: (context, state) {
                   if (state.isPaymentInProgress) {
-                    return AppLoading(message: context.l10n.processingPayment);
+                    return const Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: AppLoadingIndicator(),
+                    );
                   }
                   return const SizedBox.shrink();
                 },
               ),
-              const SizedBox(height: 16),
               Text(
                 context.l10n.paymentRedirectNotice,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: AppTypography.bodySmall,
                 textAlign: TextAlign.center,
               ),
+              AppSpacing.verticalMd,
             ],
           ),
         ),
@@ -126,41 +129,34 @@ class PaymentScreen extends StatelessWidget {
     required String subtitle,
     required IconData icon,
   }) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          context.read<BookingCubit>().initiatePayment(provider: provider);
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryLight,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: AppTheme.primaryColor),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: Theme.of(context).textTheme.titleSmall),
-                    Text(subtitle,
-                        style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-              ),
-              const Icon(Icons.chevron_right, color: AppTheme.textHint),
-            ],
+    return AppCard(
+      onTap: () {
+        context.read<BookingCubit>().initiatePayment(provider: provider);
+      },
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLight,
+              borderRadius: AppRadius.borderRadiusMd,
+            ),
+            child: Icon(icon, color: AppColors.primary),
           ),
-        ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: AppTypography.titleMedium),
+                Text(subtitle, style: AppTypography.bodySmall),
+              ],
+            ),
+          ),
+          const Icon(Icons.chevron_right_rounded, color: AppColors.textHint),
+        ],
       ),
     );
   }
@@ -169,8 +165,9 @@ class PaymentScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.l10n.cancelPaymentTitle),
-        content: Text(context.l10n.cancelPaymentMessage),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusLg),
+        title: Text(context.l10n.cancelPaymentTitle, style: AppTypography.headlineSmall),
+        content: Text(context.l10n.cancelPaymentMessage, style: AppTypography.bodyMedium),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -183,7 +180,7 @@ class PaymentScreen extends StatelessWidget {
               context.go('/home');
             },
             child: Text(context.l10n.cancel,
-                style: const TextStyle(color: AppTheme.errorColor)),
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

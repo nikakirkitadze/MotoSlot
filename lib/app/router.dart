@@ -25,112 +25,158 @@ import 'package:moto_slot/modules/admin/presentation/cubit/admin_bookings_cubit.
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+Page<void> _buildPage(Widget child, GoRouterState state) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 300),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.04),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const SplashScreen(),
+      pageBuilder: (context, state) => _buildPage(const SplashScreen(), state),
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => const LoginScreen(),
+      pageBuilder: (context, state) => _buildPage(const LoginScreen(), state),
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      pageBuilder: (context, state) => _buildPage(const RegisterScreen(), state),
     ),
     GoRoute(
       path: '/forgot-password',
-      builder: (context, state) => const ForgotPasswordScreen(),
+      pageBuilder: (context, state) => _buildPage(const ForgotPasswordScreen(), state),
     ),
     // User routes
     GoRoute(
       path: '/home',
-      builder: (context, state) => MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => getIt<UserSlotsCubit>()),
-          BlocProvider(create: (_) => getIt<BookingCubit>()),
-        ],
-        child: const UserHomeScreen(),
+      pageBuilder: (context, state) => _buildPage(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<UserSlotsCubit>()),
+            BlocProvider(create: (_) => getIt<BookingCubit>()),
+          ],
+          child: const UserHomeScreen(),
+        ),
+        state,
       ),
     ),
     GoRoute(
       path: '/slot-details',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final slot = state.extra as TimeSlot;
-        return BlocProvider(
-          create: (_) => getIt<BookingCubit>(),
-          child: SlotDetailsScreen(slot: slot),
+        return _buildPage(
+          BlocProvider(
+            create: (_) => getIt<BookingCubit>(),
+            child: SlotDetailsScreen(slot: slot),
+          ),
+          state,
         );
       },
     ),
     GoRoute(
       path: '/payment',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final booking = state.extra as Booking;
-        return BlocProvider(
-          create: (_) => getIt<BookingCubit>(),
-          child: PaymentScreen(booking: booking),
+        return _buildPage(
+          BlocProvider(
+            create: (_) => getIt<BookingCubit>(),
+            child: PaymentScreen(booking: booking),
+          ),
+          state,
         );
       },
     ),
     GoRoute(
       path: '/payment-webview',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final params = state.extra as Map<String, String>;
-        return PaymentWebViewScreen(
-          paymentUrl: params['paymentUrl']!,
-          paymentId: params['paymentId']!,
+        return _buildPage(
+          PaymentWebViewScreen(
+            paymentUrl: params['paymentUrl']!,
+            paymentId: params['paymentId']!,
+          ),
+          state,
         );
       },
     ),
     GoRoute(
       path: '/booking-confirmation',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final booking = state.extra as Booking;
-        return BookingConfirmationScreen(booking: booking);
+        return _buildPage(BookingConfirmationScreen(booking: booking), state);
       },
     ),
     GoRoute(
       path: '/booking-details',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final booking = state.extra as Booking;
-        return BlocProvider(
-          create: (_) => getIt<BookingCubit>(),
-          child: BookingDetailsScreen(booking: booking),
+        return _buildPage(
+          BlocProvider(
+            create: (_) => getIt<BookingCubit>(),
+            child: BookingDetailsScreen(booking: booking),
+          ),
+          state,
         );
       },
     ),
     // Admin routes
     GoRoute(
       path: '/admin',
-      builder: (context, state) => MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => getIt<AdminAvailabilityCubit>()),
-          BlocProvider(create: (_) => getIt<AdminBookingsCubit>()),
-        ],
-        child: const AdminHomeScreen(),
+      pageBuilder: (context, state) => _buildPage(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<AdminAvailabilityCubit>()),
+            BlocProvider(create: (_) => getIt<AdminBookingsCubit>()),
+          ],
+          child: const AdminHomeScreen(),
+        ),
+        state,
       ),
     ),
     GoRoute(
       path: '/admin/manual-booking',
-      builder: (context, state) => MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => getIt<AdminBookingsCubit>()),
-          BlocProvider(create: (_) => getIt<AdminAvailabilityCubit>()..loadConfig()),
-        ],
-        child: const AdminManualBookingScreen(),
+      pageBuilder: (context, state) => _buildPage(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<AdminBookingsCubit>()),
+            BlocProvider(create: (_) => getIt<AdminAvailabilityCubit>()..loadConfig()),
+          ],
+          child: const AdminManualBookingScreen(),
+        ),
+        state,
       ),
     ),
     GoRoute(
       path: '/admin/booking-detail',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final booking = state.extra as Booking;
-        return BlocProvider(
-          create: (_) => getIt<AdminBookingsCubit>(),
-          child: AdminBookingDetailScreen(booking: booking),
+        return _buildPage(
+          BlocProvider(
+            create: (_) => getIt<AdminBookingsCubit>(),
+            child: AdminBookingDetailScreen(booking: booking),
+          ),
+          state,
         );
       },
     ),

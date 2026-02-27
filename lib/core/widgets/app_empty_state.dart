@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 
 class AppEmptyState extends StatelessWidget {
   final String title;
@@ -23,27 +23,35 @@ class AppEmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon ?? Icons.inbox_outlined,
-              size: 72,
-              color: AppTheme.textHint.withValues(alpha: 0.5),
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.primaryLight.withValues(alpha: 0.5),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon ?? Icons.inbox_outlined,
+                size: 40,
+                color: AppColors.primary.withValues(alpha: 0.6),
+              ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.verticalLg,
             Text(
               title,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: AppTypography.titleLarge,
               textAlign: TextAlign.center,
             ),
             if (subtitle != null) ...[
-              const SizedBox(height: 8),
+              AppSpacing.verticalSm,
               Text(
                 subtitle!,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: AppTypography.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ],
             if (action != null) ...[
-              const SizedBox(height: 24),
+              AppSpacing.verticalLg,
               action!,
             ],
           ],

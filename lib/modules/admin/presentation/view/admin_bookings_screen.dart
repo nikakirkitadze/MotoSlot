@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/locale/cubit_l10n.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
@@ -40,7 +40,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(localizeMessage(context, state.successMessage!)),
-                    backgroundColor: AppTheme.successColor,
+                    backgroundColor: AppColors.success,
                   ),
                 );
                 context.read<AdminBookingsCubit>().clearMessages();
@@ -48,27 +48,30 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
             },
             builder: (context, state) {
               if (state.isLoading) {
-                return const AppLoading();
+                return const AppLoadingIndicator();
               }
 
               if (state.bookings.isEmpty) {
                 return AppEmptyState(
                   title: context.l10n.noBookingsFound,
                   subtitle: context.l10n.noBookingsFoundSubtitle,
-                  icon: Icons.search_off,
+                  icon: Icons.search_off_rounded,
                 );
               }
 
               return RefreshIndicator(
+                color: AppColors.primary,
                 onRefresh: () async =>
                     context.read<AdminBookingsCubit>().loadBookings(
                           status: _selectedFilter,
                         ),
                 child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
                   itemCount: state.bookings.length,
-                  itemBuilder: (context, index) =>
-                      _buildBookingTile(state.bookings[index]),
+                  itemBuilder: (context, index) => StaggeredItem(
+                    index: index,
+                    child: _buildBookingTile(state.bookings[index]),
+                  ),
                 ),
               );
             },
@@ -81,7 +84,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
   Widget _buildFilterBar() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
       child: Row(
         children: [
           _buildFilterChip(context.l10n.all, null),
@@ -100,89 +103,74 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
   Widget _buildFilterChip(String label, BookingStatus? status) {
     final isSelected = _selectedFilter == status;
     return FilterChip(
-      label: Text(label),
+      label: Text(label, style: AppTypography.labelMedium.copyWith(
+        color: isSelected ? AppColors.primary : AppColors.textSecondary,
+      )),
       selected: isSelected,
       onSelected: (_) {
         setState(() => _selectedFilter = status);
         context.read<AdminBookingsCubit>().setFilter(status: status);
       },
-      selectedColor: AppTheme.primaryLight,
-      checkmarkColor: AppTheme.primaryColor,
+      selectedColor: AppColors.primaryLight,
+      checkmarkColor: AppColors.primary,
+      backgroundColor: AppColors.surfaceVariant,
+      side: BorderSide.none,
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusSm),
     );
   }
 
   Widget _buildBookingTile(Booking booking) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: InkWell(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: AppCard(
         onTap: () => context.push('/admin/booking-detail', extra: booking),
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    booking.bookingReference,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: AppTheme.primaryColor,
-                        ),
-                  ),
-                  StatusBadge.fromBookingStatus(booking.status, context),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  const Icon(Icons.person_outline,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Text(booking.userFullName,
-                      style: Theme.of(context).textTheme.titleSmall),
-                  const SizedBox(width: 16),
-                  const Icon(Icons.phone_outlined,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Text(booking.userPhone,
-                      style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_today,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppDateUtils.formatDateTime(booking.startTime),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              if (booking.isManualBooking) ...[
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppTheme.warningColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    context.l10n.manualBooking,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppTheme.warningColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  booking.bookingReference,
+                  style: AppTypography.labelLarge.copyWith(color: AppColors.primary),
+                ),
+                AppBadge.fromBookingStatus(booking.status, context),
+              ],
+            ),
+            AppSpacing.verticalSm,
+            Row(
+              children: [
+                const Icon(Icons.person_outline_rounded,
+                    size: 15, color: AppColors.textSecondary),
+                const SizedBox(width: 6),
+                Text(booking.userFullName, style: AppTypography.titleSmall),
+                const SizedBox(width: 14),
+                const Icon(Icons.phone_outlined,
+                    size: 15, color: AppColors.textSecondary),
+                const SizedBox(width: 6),
+                Text(booking.userPhone, style: AppTypography.bodySmall),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                const Icon(Icons.calendar_today_rounded,
+                    size: 15, color: AppColors.textSecondary),
+                const SizedBox(width: 6),
+                Text(
+                  AppDateUtils.formatDateTime(booking.startTime),
+                  style: AppTypography.bodyMedium,
                 ),
               ],
+            ),
+            if (booking.isManualBooking) ...[
+              const SizedBox(height: 8),
+              AppBadge(
+                label: context.l10n.manualBooking,
+                color: AppColors.warning,
+              ),
             ],
-          ),
+          ],
         ),
       ),
     );
