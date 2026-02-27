@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 
 class AppTextField extends StatefulWidget {
   final String? label;
@@ -60,7 +61,7 @@ class _AppTextFieldState extends State<AppTextField> {
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: Theme.of(context).textTheme.labelLarge,
+            style: AppTypography.labelLarge.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 8),
         ],
@@ -77,14 +78,19 @@ class _AppTextFieldState extends State<AppTextField> {
           inputFormatters: widget.inputFormatters,
           focusNode: widget.focusNode,
           textInputAction: widget.textInputAction,
+          style: AppTypography.bodyLarge,
+          cursorColor: AppColors.primary,
           decoration: InputDecoration(
             hintText: widget.hint,
+            hintStyle: AppTypography.bodyLarge.copyWith(color: AppColors.textHint),
             prefixIcon: widget.prefixIcon,
+            prefixIconColor: AppColors.textHint,
             suffixIcon: widget.obscureText
                 ? IconButton(
                     icon: Icon(
-                      _obscured ? Icons.visibility_off : Icons.visibility,
+                      _obscured ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                       size: 20,
+                      color: AppColors.textHint,
                     ),
                     onPressed: () => setState(() => _obscured = !_obscured),
                   )

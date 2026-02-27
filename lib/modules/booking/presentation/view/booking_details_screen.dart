@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
-import 'package:moto_slot/core/widgets/widgets.dart';
 import 'package:moto_slot/modules/booking/domain/model/booking.dart';
 import 'package:moto_slot/modules/booking/presentation/cubit/booking_cubit.dart';
 
@@ -15,75 +14,84 @@ class BookingDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.bookingDetails),
-      ),
+    return AppScaffold(
+      hasBackButton: true,
+      title: context.l10n.bookingDetails,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: AppSpacing.screenPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            AppSpacing.verticalSm,
             // Status header
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            FadeInWidget(
+              child: AppCard(
                 child: Column(
                   children: [
-                    StatusBadge.fromBookingStatus(booking.status, context),
-                    const SizedBox(height: 12),
+                    AppBadge.fromBookingStatus(booking.status, context),
+                    AppSpacing.verticalSm,
                     Text(
                       booking.bookingReference,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: AppTypography.headlineMedium,
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.verticalMd,
             // Details card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            FadeInWidget(
+              delay: const Duration(milliseconds: 100),
+              child: AppCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.lessonDetails,
-                        style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 16),
-                    _buildRow(context, Icons.calendar_today, context.l10n.date,
+                    Text(context.l10n.lessonDetails, style: AppTypography.titleLarge),
+                    AppSpacing.verticalMd,
+                    _buildRow(context, Icons.calendar_today_rounded, context.l10n.date,
                         AppDateUtils.formatDate(booking.startTime)),
-                    const Divider(height: 20),
-                    _buildRow(
-                      context,
-                      Icons.access_time,
-                      context.l10n.time,
-                      AppDateUtils.formatTimeRange(
-                        booking.startTime,
-                        booking.endTime,
-                      ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Divider(height: 1, color: AppColors.divider),
                     ),
-                    const Divider(height: 20),
+                    _buildRow(context, Icons.access_time_rounded, context.l10n.time,
+                        AppDateUtils.formatTimeRange(booking.startTime, booking.endTime)),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Divider(height: 1, color: AppColors.divider),
+                    ),
                     _buildRow(context, Icons.timer_outlined, context.l10n.duration,
                         context.l10n.minutesFull(booking.durationMinutes)),
                     if (booking.instructorName != null) ...[
-                      const Divider(height: 20),
-                      _buildRow(context, Icons.person_outline, context.l10n.instructor,
-                          booking.instructorName!),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(height: 1, color: AppColors.divider),
+                      ),
+                      _buildRow(context, Icons.person_outline_rounded,
+                          context.l10n.instructor, booking.instructorName!),
                     ],
                     if (booking.location != null) ...[
-                      const Divider(height: 20),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(height: 1, color: AppColors.divider),
+                      ),
                       _buildRow(context, Icons.location_on_outlined,
                           context.l10n.location, booking.location!),
                     ],
                     if (booking.contactPhone != null) ...[
-                      const Divider(height: 20),
-                      _buildRow(context, Icons.phone_outlined, context.l10n.contact,
-                          booking.contactPhone!),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(height: 1, color: AppColors.divider),
+                      ),
+                      _buildRow(context, Icons.phone_outlined,
+                          context.l10n.contact, booking.contactPhone!),
                     ],
                     if (booking.amount != null) ...[
-                      const Divider(height: 20),
-                      _buildRow(context, Icons.payment, context.l10n.amount,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(height: 1, color: AppColors.divider),
+                      ),
+                      _buildRow(context, Icons.payment_rounded, context.l10n.amount,
                           context.l10n.gelCurrency(booking.amount!.toStringAsFixed(2))),
                     ],
                   ],
@@ -92,13 +100,17 @@ class BookingDetailsScreen extends StatelessWidget {
             ),
             if (booking.isConfirmed &&
                 booking.startTime.isAfter(DateTime.now().toUtc())) ...[
-              const SizedBox(height: 24),
-              AppButton(
-                text: context.l10n.cancelBooking,
-                onPressed: () => _showCancelDialog(context),
-                backgroundColor: AppTheme.errorColor,
+              AppSpacing.verticalLg,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: PrimaryButton(
+                  text: context.l10n.cancelBooking,
+                  onPressed: () => _showCancelDialog(context),
+                  icon: Icons.cancel_outlined,
+                ),
               ),
             ],
+            AppSpacing.verticalLg,
           ],
         ),
       ),
@@ -113,14 +125,22 @@ class BookingDetailsScreen extends StatelessWidget {
   ) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: AppTheme.primaryColor),
+        Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: AppColors.primaryLight,
+            borderRadius: AppRadius.borderRadiusSm,
+          ),
+          child: Icon(icon, size: 18, color: AppColors.primary),
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: Theme.of(context).textTheme.bodySmall),
-              Text(value, style: Theme.of(context).textTheme.titleSmall),
+              Text(label, style: AppTypography.bodySmall),
+              Text(value, style: AppTypography.titleMedium),
             ],
           ),
         ),
@@ -132,8 +152,9 @@ class BookingDetailsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.l10n.cancelBookingConfirmTitle),
-        content: Text(context.l10n.cancelBookingConfirmMessage),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusLg),
+        title: Text(context.l10n.cancelBookingConfirmTitle, style: AppTypography.headlineSmall),
+        content: Text(context.l10n.cancelBookingConfirmMessage, style: AppTypography.bodyMedium),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -146,7 +167,7 @@ class BookingDetailsScreen extends StatelessWidget {
               context.go('/home');
             },
             child: Text(context.l10n.cancelBooking,
-                style: const TextStyle(color: AppTheme.errorColor)),
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

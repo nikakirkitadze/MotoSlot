@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 
-class AppButton extends StatelessWidget {
+class AppButton extends StatefulWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
@@ -24,46 +24,80 @@ class AppButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final child = isLoading
-        ? const SizedBox(
-            height: 20,
-            width: 20,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            ),
-          )
-        : Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(icon, size: 20),
-                const SizedBox(width: 8),
-              ],
-              Text(text),
-            ],
-          );
+  State<AppButton> createState() => _AppButtonState();
+}
 
-    if (isOutlined) {
+class _AppButtonState extends State<AppButton> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = widget.onPressed != null && !widget.isLoading;
+
+    if (widget.isOutlined) {
       return SizedBox(
-        width: width ?? double.infinity,
-        child: OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          child: child,
+        width: widget.width ?? double.infinity,
+        child: SecondaryButton(
+          text: widget.text,
+          onPressed: widget.onPressed,
+          isLoading: widget.isLoading,
+          icon: widget.icon,
+          width: widget.width,
         ),
       );
     }
 
-    return SizedBox(
-      width: width ?? double.infinity,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: textColor,
+    return GestureDetector(
+      onTapDown: enabled ? (_) => setState(() => _pressed = true) : null,
+      onTapUp: enabled
+          ? (_) {
+              setState(() => _pressed = false);
+              widget.onPressed?.call();
+            }
+          : null,
+      onTapCancel: () => setState(() => _pressed = false),
+      child: AnimatedScale(
+        scale: _pressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: AnimatedOpacity(
+          opacity: enabled ? 1.0 : 0.5,
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            width: widget.width ?? double.infinity,
+            height: 52,
+            decoration: BoxDecoration(
+              color: widget.backgroundColor ?? AppColors.primary,
+              borderRadius: AppRadius.borderRadiusMd,
+              boxShadow: enabled ? AppShadows.primary : null,
+            ),
+            child: Center(
+              child: widget.isLoading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (widget.icon != null) ...[
+                          Icon(widget.icon, size: 20, color: widget.textColor ?? AppColors.textOnPrimary),
+                          const SizedBox(width: 8),
+                        ],
+                        Text(
+                          widget.text,
+                          style: AppTypography.button.copyWith(
+                            color: widget.textColor ?? AppColors.textOnPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+          ),
         ),
-        child: child,
       ),
     );
   }
@@ -83,12 +117,10 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return GhostButton(
+      text: text,
       onPressed: onPressed,
-      style: TextButton.styleFrom(
-        foregroundColor: color ?? AppTheme.primaryColor,
-      ),
-      child: Text(text),
+      color: color,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/locale/cubit_l10n.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
@@ -42,8 +42,7 @@ class _AdminManualBookingScreenState
   }
 
   void _tryPrefillFromConfig() {
-    final config =
-        context.read<AdminAvailabilityCubit>().state.config;
+    final config = context.read<AdminAvailabilityCubit>().state.config;
     if (config != null && !_configPrefilled) {
       _configPrefilled = true;
       _instructorController.text = config.instructorName ?? '';
@@ -77,155 +76,178 @@ class _AdminManualBookingScreenState
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(localizeMessage(context, state.successMessage!)),
-                backgroundColor: AppTheme.successColor,
+                backgroundColor: AppColors.success,
               ),
             );
             context.read<AdminBookingsCubit>().clearMessages();
             context.pop();
           }
-          if (state.status == StateStatus.failure &&
-              state.errorMessage != null) {
+          if (state.status == StateStatus.failure && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(localizeMessage(context, state.errorMessage!)),
-                backgroundColor: AppTheme.errorColor,
+                backgroundColor: AppColors.error,
               ),
             );
             context.read<AdminBookingsCubit>().clearMessages();
           }
         },
         builder: (context, state) {
-          return Scaffold(
-          appBar: AppBar(title: Text(context.l10n.manualBooking)),
-          body: AppLoadingOverlay(
-            isLoading: state.isLoading,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Step 1: Student info
-                  Text(context.l10n.studentInfo,
-                      style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppTextField(
-                          label: context.l10n.firstName,
-                          hint: context.l10n.firstNameHint,
-                          controller: _firstNameController,
-                          prefixIcon:
-                              const Icon(Icons.person_outline, size: 20),
-                          onChanged: (_) => setState(() {}),
-                        ),
+          return AppScaffold(
+            hasBackButton: true,
+            title: context.l10n.manualBooking,
+            body: AppLoadingOverlay(
+              isLoading: state.isLoading,
+              child: SingleChildScrollView(
+                padding: AppSpacing.screenPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AppSpacing.verticalSm,
+                    // Step 1: Student info
+                    AppCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(context.l10n.studentInfo, style: AppTypography.titleLarge),
+                          AppSpacing.verticalMd,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: AppTextField(
+                                  label: context.l10n.firstName,
+                                  hint: context.l10n.firstNameHint,
+                                  controller: _firstNameController,
+                                  prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: AppTextField(
+                                  label: context.l10n.lastName,
+                                  hint: context.l10n.lastNameHint,
+                                  controller: _lastNameController,
+                                  prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AppSpacing.verticalMd,
+                          AppTextField(
+                            label: context.l10n.phoneNumber,
+                            hint: context.l10n.phoneHint,
+                            controller: _phoneController,
+                            keyboardType: TextInputType.phone,
+                            prefixIcon: const Icon(Icons.phone_outlined, size: 20),
+                            onChanged: (_) => setState(() {}),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: AppTextField(
-                          label: context.l10n.lastName,
-                          hint: context.l10n.lastNameHint,
-                          controller: _lastNameController,
-                          prefixIcon:
-                              const Icon(Icons.person_outline, size: 20),
-                          onChanged: (_) => setState(() {}),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  AppTextField(
-                    label: context.l10n.phoneNumber,
-                    hint: context.l10n.phoneHint,
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
-                    prefixIcon: const Icon(Icons.phone_outlined, size: 20),
-                    onChanged: (_) => setState(() {}),
-                  ),
-                  const SizedBox(height: 24),
-                  // Step 2: Select date & slot
-                  Text(context.l10n.selectSlot,
-                      style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 12),
-                  InkWell(
-                    onTap: () => _pickDate(context),
-                    child: InputDecorator(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.calendar_today, size: 20),
-                        suffixIcon: Icon(Icons.arrow_drop_down),
-                      ),
-                      child: Text(AppDateUtils.formatDate(_selectedDate)),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (state.availableSlots.isEmpty)
-                    Text(
-                      context.l10n.noSlotsForDate,
-                      style: const TextStyle(color: AppTheme.textHint),
-                    )
-                  else
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: state.availableSlots.map((slot) {
-                        final isSelected = _selectedSlot?.id == slot.id;
-                        return ChoiceChip(
-                          label: Text(AppDateUtils.formatTimeRange(
-                            slot.startTime,
-                            slot.endTime,
-                          )),
-                          selected: isSelected,
-                          selectedColor: AppTheme.primaryLight,
-                          onSelected: (_) {
-                            setState(() => _selectedSlot = slot);
-                          },
-                        );
-                      }).toList(),
+                    AppSpacing.verticalMd,
+                    // Step 2: Select date & slot
+                    AppCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(context.l10n.selectSlot, style: AppTypography.titleLarge),
+                          AppSpacing.verticalMd,
+                          InkWell(
+                            onTap: () => _pickDate(context),
+                            borderRadius: AppRadius.borderRadiusMd,
+                            child: InputDecorator(
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.calendar_today_rounded, size: 20),
+                                suffixIcon: const Icon(Icons.arrow_drop_down_rounded),
+                                border: OutlineInputBorder(borderRadius: AppRadius.borderRadiusMd),
+                              ),
+                              child: Text(AppDateUtils.formatDate(_selectedDate),
+                                  style: AppTypography.bodyLarge),
+                            ),
+                          ),
+                          AppSpacing.verticalMd,
+                          if (state.availableSlots.isEmpty)
+                            Text(
+                              context.l10n.noSlotsForDate,
+                              style: AppTypography.bodyMedium.copyWith(color: AppColors.textHint),
+                            )
+                          else
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: state.availableSlots.map((slot) {
+                                final isSelected = _selectedSlot?.id == slot.id;
+                                return ChoiceChip(
+                                  label: Text(
+                                    AppDateUtils.formatTimeRange(slot.startTime, slot.endTime),
+                                    style: AppTypography.labelMedium.copyWith(
+                                      color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                                    ),
+                                  ),
+                                  selected: isSelected,
+                                  selectedColor: AppColors.primaryLight,
+                                  backgroundColor: AppColors.surfaceVariant,
+                                  side: BorderSide.none,
+                                  shape: RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusSm),
+                                  onSelected: (_) {
+                                    setState(() => _selectedSlot = slot);
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                        ],
+                      ),
                     ),
-                  const SizedBox(height: 24),
-                  // Step 3: Booking details (auto-filled from preferences)
-                  Text(context.l10n.bookingDetailsStep,
-                      style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 4),
-                  Text(
-                    context.l10n.autoFilledFromSettings,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppTheme.textHint,
-                        ),
-                  ),
-                  const SizedBox(height: 12),
-                  AppTextField(
-                    label: context.l10n.instructorName,
-                    hint: context.l10n.enterInstructorName,
-                    controller: _instructorController,
-                    prefixIcon: const Icon(Icons.person_outline, size: 20),
-                  ),
-                  const SizedBox(height: 16),
-                  AppTextField(
-                    label: context.l10n.location,
-                    hint: context.l10n.enterLessonLocation,
-                    controller: _locationController,
-                    prefixIcon:
-                        const Icon(Icons.location_on_outlined, size: 20),
-                  ),
-                  const SizedBox(height: 16),
-                  AppTextField(
-                    label: context.l10n.contactPhone,
-                    hint: context.l10n.contactPhoneBookingHint,
-                    controller: _contactPhoneController,
-                    keyboardType: TextInputType.phone,
-                    prefixIcon: const Icon(Icons.phone_outlined, size: 20),
-                  ),
-                  const SizedBox(height: 32),
-                  AppButton(
-                    text: context.l10n.createBookingAndSendSms,
-                    onPressed: _canSubmit() ? _onSubmit : null,
-                    icon: Icons.check,
-                  ),
-                ],
+                    AppSpacing.verticalMd,
+                    // Step 3: Booking details
+                    AppCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(context.l10n.bookingDetailsStep, style: AppTypography.titleLarge),
+                          const SizedBox(height: 4),
+                          Text(
+                            context.l10n.autoFilledFromSettings,
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.textHint),
+                          ),
+                          AppSpacing.verticalMd,
+                          AppTextField(
+                            label: context.l10n.instructorName,
+                            hint: context.l10n.enterInstructorName,
+                            controller: _instructorController,
+                            prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
+                          ),
+                          AppSpacing.verticalMd,
+                          AppTextField(
+                            label: context.l10n.location,
+                            hint: context.l10n.enterLessonLocation,
+                            controller: _locationController,
+                            prefixIcon: const Icon(Icons.location_on_outlined, size: 20),
+                          ),
+                          AppSpacing.verticalMd,
+                          AppTextField(
+                            label: context.l10n.contactPhone,
+                            hint: context.l10n.contactPhoneBookingHint,
+                            controller: _contactPhoneController,
+                            keyboardType: TextInputType.phone,
+                            prefixIcon: const Icon(Icons.phone_outlined, size: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AppSpacing.verticalLg,
+                    PrimaryButton(
+                      text: context.l10n.createBookingAndSendSms,
+                      onPressed: _canSubmit() ? _onSubmit : null,
+                      icon: Icons.check_rounded,
+                    ),
+                    AppSpacing.verticalLg,
+                  ],
+                ),
               ),
             ),
-          ),
           );
         },
       ),

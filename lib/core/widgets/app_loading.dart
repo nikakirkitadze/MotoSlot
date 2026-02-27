@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 
 class AppLoading extends StatelessWidget {
   final String? message;
@@ -8,50 +8,6 @@ class AppLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CircularProgressIndicator(
-            color: AppTheme.primaryColor,
-          ),
-          if (message != null) ...[
-            const SizedBox(height: 16),
-            Text(
-              message!,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class AppLoadingOverlay extends StatelessWidget {
-  final bool isLoading;
-  final Widget child;
-  final String? message;
-
-  const AppLoadingOverlay({
-    super.key,
-    required this.isLoading,
-    required this.child,
-    this.message,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        child,
-        if (isLoading)
-          Container(
-            color: Colors.black26,
-            child: AppLoading(message: message),
-          ),
-      ],
-    );
+    return const AppLoadingIndicator();
   }
 }

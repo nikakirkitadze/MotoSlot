@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moto_slot/app/theme.dart';
+import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
 import 'package:moto_slot/core/utils/enums.dart';
@@ -46,21 +46,37 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TabBar(
-          controller: _tabController,
-          labelColor: AppTheme.primaryColor,
-          unselectedLabelColor: AppTheme.textHint,
-          indicatorColor: AppTheme.primaryColor,
-          tabs: [
-            Tab(text: context.l10n.upcoming),
-            Tab(text: context.l10n.past),
-          ],
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceVariant,
+            borderRadius: AppRadius.borderRadiusMd,
+          ),
+          child: TabBar(
+            controller: _tabController,
+            labelColor: AppColors.primary,
+            unselectedLabelColor: AppColors.textHint,
+            labelStyle: AppTypography.titleMedium,
+            unselectedLabelStyle: AppTypography.bodyMedium,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: AppRadius.borderRadiusMd,
+              boxShadow: AppShadows.sm,
+            ),
+            indicatorPadding: const EdgeInsets.all(3),
+            dividerHeight: 0,
+            tabs: [
+              Tab(text: context.l10n.upcoming),
+              Tab(text: context.l10n.past),
+            ],
+          ),
         ),
         Expanded(
           child: BlocBuilder<BookingCubit, BookingState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return AppLoading(message: context.l10n.loadingBookings);
+                return const AppLoadingIndicator();
               }
 
               if (state.status == StateStatus.failure) {
@@ -91,83 +107,74 @@ class _MyBookingsScreenState extends State<MyBookingsScreen>
         subtitle: isUpcoming
             ? context.l10n.noUpcomingBookingsSubtitle
             : context.l10n.noPastBookingsSubtitle,
-        icon: isUpcoming ? Icons.event_available : Icons.history,
+        icon: isUpcoming ? Icons.event_available_rounded : Icons.history_rounded,
       );
     }
 
     return RefreshIndicator(
+      color: AppColors.primary,
       onRefresh: () async => _loadBookings(),
       child: ListView.builder(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
         itemCount: bookings.length,
-        itemBuilder: (context, index) =>
-            _buildBookingCard(bookings[index]),
+        itemBuilder: (context, index) => StaggeredItem(
+          index: index,
+          child: _buildBookingCard(bookings[index]),
+        ),
       ),
     );
   }
 
   Widget _buildBookingCard(Booking booking) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: InkWell(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: AppCard(
         onTap: () => context.push('/booking-details', extra: booking),
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    booking.bookingReference,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: AppTheme.primaryColor,
-                        ),
-                  ),
-                  StatusBadge.fromBookingStatus(booking.status, context),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_today,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppDateUtils.formatDate(booking.startTime),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(width: 16),
-                  const Icon(Icons.access_time,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppDateUtils.formatTimeRange(
-                      booking.startTime,
-                      booking.endTime,
-                    ),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              if (booking.location != null) ...[
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.location_on_outlined,
-                        size: 16, color: AppTheme.textSecondary),
-                    const SizedBox(width: 8),
-                    Text(
-                      booking.location!,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  booking.bookingReference,
+                  style: AppTypography.labelLarge.copyWith(color: AppColors.primary),
+                ),
+                AppBadge.fromBookingStatus(booking.status, context),
+              ],
+            ),
+            AppSpacing.verticalSm,
+            Row(
+              children: [
+                const Icon(Icons.calendar_today_rounded,
+                    size: 15, color: AppColors.textSecondary),
+                const SizedBox(width: 6),
+                Text(
+                  AppDateUtils.formatDate(booking.startTime),
+                  style: AppTypography.bodyMedium,
+                ),
+                const SizedBox(width: 14),
+                const Icon(Icons.access_time_rounded,
+                    size: 15, color: AppColors.textSecondary),
+                const SizedBox(width: 6),
+                Text(
+                  AppDateUtils.formatTimeRange(booking.startTime, booking.endTime),
+                  style: AppTypography.bodyMedium,
                 ),
               ],
+            ),
+            if (booking.location != null) ...[
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  const Icon(Icons.location_on_outlined,
+                      size: 15, color: AppColors.textSecondary),
+                  const SizedBox(width: 6),
+                  Text(booking.location!, style: AppTypography.bodySmall),
+                ],
+              ),
             ],
-          ),
+          ],
         ),
       ),
     );
