@@ -26,7 +26,7 @@ class UserSlotsCubit extends Cubit<UserSlotsState> {
         selectedDate.month,
         selectedDate.day,
       );
-      final toDate = fromDate.add(const Duration(days: 30));
+      final toDate = fromDate.add(const Duration(days: 90));
 
       final slots = await _slotRepository.getAvailableSlots(
         fromDate: fromDate,

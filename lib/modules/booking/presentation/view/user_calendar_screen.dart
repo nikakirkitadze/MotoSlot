@@ -239,9 +239,12 @@ class _UserCalendarScreenState extends State<UserCalendarScreen> {
                           ],
                         ),
                       ),
-                      OutlinedAppButton(
-                        text: context.l10n.bookNow,
-                        onPressed: () => context.push('/slot-details', extra: slot),
+                      SizedBox(
+                        width: 110,
+                        child: OutlinedAppButton(
+                          text: context.l10n.bookNow,
+                          onPressed: () => context.push('/slot-details', extra: slot),
+                        ),
                       ),
                     ],
                   ),
