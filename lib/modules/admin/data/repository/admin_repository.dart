@@ -321,4 +321,106 @@ class AdminRepository {
       'completedAt': DateTime.now().toUtc().toIso8601String(),
     });
   }
+
+  // ── Receipt Review ──
+
+  Future<List<Booking>> getPendingReviewBookings() async {
+    final snapshot = await _firestore
+        .collection(AppConstants.bookingsCollection)
+        .where('status', isEqualTo: BookingStatus.pendingReview.value)
+        .orderBy('createdAt', descending: true)
+        .get();
+    return snapshot.docs
+        .map((doc) => Booking.fromJson(doc.data()))
+        .toList();
+  }
+
+  Future<void> approveReceipt({
+    required String bookingId,
+    required String paymentId,
+    required String receiptValidationId,
+    String? note,
+  }) async {
+    final now = DateTime.now().toUtc().toIso8601String();
+    final batch = _firestore.batch();
+
+    batch.update(
+      _firestore.collection(AppConstants.bookingsCollection).doc(bookingId),
+      {
+        'status': BookingStatus.confirmed.value,
+        'confirmedAt': now,
+      },
+    );
+
+    batch.update(
+      _firestore.collection(AppConstants.paymentsCollection).doc(paymentId),
+      {
+        'status': PaymentStatus.success.value,
+        'completedAt': now,
+      },
+    );
+
+    batch.update(
+      _firestore
+          .collection(AppConstants.receiptsCollection)
+          .doc(receiptValidationId),
+      {
+        'isAdminApproved': true,
+        'adminNote': note,
+        'reviewedAt': now,
+      },
+    );
+
+    await batch.commit();
+  }
+
+  Future<void> rejectReceipt({
+    required String bookingId,
+    required String slotId,
+    required String paymentId,
+    required String receiptValidationId,
+    required String reason,
+  }) async {
+    final now = DateTime.now().toUtc().toIso8601String();
+    final batch = _firestore.batch();
+
+    batch.update(
+      _firestore.collection(AppConstants.bookingsCollection).doc(bookingId),
+      {
+        'status': BookingStatus.cancelled.value,
+        'cancelledAt': now,
+        'cancellationReason': 'Receipt rejected: $reason',
+      },
+    );
+
+    batch.update(
+      _firestore.collection(AppConstants.slotsCollection).doc(slotId),
+      {
+        'status': SlotStatus.available.value,
+        'bookedByUserId': null,
+        'bookingId': null,
+      },
+    );
+
+    batch.update(
+      _firestore.collection(AppConstants.paymentsCollection).doc(paymentId),
+      {
+        'status': PaymentStatus.receiptRejected.value,
+        'errorMessage': reason,
+      },
+    );
+
+    batch.update(
+      _firestore
+          .collection(AppConstants.receiptsCollection)
+          .doc(receiptValidationId),
+      {
+        'isAdminApproved': false,
+        'rejectionReason': reason,
+        'reviewedAt': now,
+      },
+    );
+
+    await batch.commit();
+  }
 }

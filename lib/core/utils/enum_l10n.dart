@@ -7,6 +7,8 @@ extension BookingStatusL10n on BookingStatus {
     switch (this) {
       case BookingStatus.pendingPayment:
         return context.l10n.bookingStatusPendingPayment;
+      case BookingStatus.pendingReview:
+        return context.l10n.bookingStatusPendingReview;
       case BookingStatus.confirmed:
         return context.l10n.bookingStatusConfirmed;
       case BookingStatus.cancelled:
@@ -41,10 +43,14 @@ extension PaymentStatusL10n on PaymentStatus {
         return context.l10n.paymentStatusPending;
       case PaymentStatus.processing:
         return context.l10n.paymentStatusProcessing;
+      case PaymentStatus.receiptUploaded:
+        return context.l10n.paymentStatusReceiptUploaded;
       case PaymentStatus.success:
         return context.l10n.paymentStatusSuccess;
       case PaymentStatus.failed:
         return context.l10n.paymentStatusFailed;
+      case PaymentStatus.receiptRejected:
+        return context.l10n.paymentStatusReceiptRejected;
       case PaymentStatus.cancelled:
         return context.l10n.paymentStatusCancelled;
     }
@@ -54,10 +60,8 @@ extension PaymentStatusL10n on PaymentStatus {
 extension PaymentProviderL10n on PaymentProvider {
   String localizedLabel(BuildContext context) {
     switch (this) {
-      case PaymentProvider.tbc:
-        return context.l10n.paymentProviderTbc;
-      case PaymentProvider.bog:
-        return context.l10n.paymentProviderBog;
+      case PaymentProvider.receipt:
+        return context.l10n.paymentProviderReceipt;
     }
   }
 }

@@ -39,6 +39,8 @@ class AppBadge extends StatelessWidget {
     switch (status) {
       case BookingStatus.pendingPayment:
         return AppColors.warning;
+      case BookingStatus.pendingReview:
+        return AppColors.info;
       case BookingStatus.confirmed:
         return AppColors.success;
       case BookingStatus.cancelled:

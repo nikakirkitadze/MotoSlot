@@ -18,15 +18,6 @@ class Validators {
     };
   }
 
-  static String? Function(String?) passwordValidator(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return (String? value) {
-      if (value == null || value.isEmpty) return l10n.validatorPasswordRequired;
-      if (value.length < 6) return l10n.validatorPasswordMinLength;
-      return null;
-    };
-  }
-
   static String? Function(String?) nameValidator(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return (String? value) {
@@ -44,18 +35,6 @@ class Validators {
       if (!phoneRegex.hasMatch(value.replaceAll(RegExp(r'[\s\-\(\)]'), ''))) {
         return l10n.validatorPhoneInvalid;
       }
-      return null;
-    };
-  }
-
-  static String? Function(String?) confirmPasswordValidator(
-      BuildContext context, String password) {
-    final l10n = AppLocalizations.of(context);
-    return (String? value) {
-      if (value == null || value.isEmpty) {
-        return l10n.validatorConfirmPasswordRequired;
-      }
-      if (value != password) return l10n.validatorPasswordsDoNotMatch;
       return null;
     };
   }

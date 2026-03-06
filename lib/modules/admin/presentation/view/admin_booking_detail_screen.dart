@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moto_slot/core/design_system/design_system.dart';
 import 'package:moto_slot/core/locale/l10n_extension.dart';
 import 'package:moto_slot/core/utils/date_utils.dart';
+import 'package:moto_slot/core/widgets/app_text_field.dart';
 import 'package:moto_slot/modules/admin/presentation/cubit/admin_bookings_cubit.dart';
 import 'package:moto_slot/modules/booking/domain/model/booking.dart';
 
@@ -130,6 +131,74 @@ class AdminBookingDetailScreen extends StatelessWidget {
                 ),
               ),
             ],
+            // Receipt review section
+            if (booking.isPendingReview) ...[
+              AppSpacing.verticalMd,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.l10n.receiptReview,
+                          style: AppTypography.titleLarge),
+                      AppSpacing.verticalMd,
+                      if (booking.receiptImageUrl != null) ...[
+                        ClipRRect(
+                          borderRadius: AppRadius.borderRadiusMd,
+                          child: Image.network(
+                            booking.receiptImageUrl!,
+                            width: double.infinity,
+                            height: 240,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) return child;
+                              return Container(
+                                width: double.infinity,
+                                height: 240,
+                                color: AppColors.background,
+                                child: const Center(
+                                    child: AppLoadingIndicator()),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: double.infinity,
+                                height: 120,
+                                color: AppColors.background,
+                                child: const Center(
+                                  child: Icon(Icons.broken_image_rounded,
+                                      size: 48, color: AppColors.textHint),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        AppSpacing.verticalMd,
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              AppSpacing.verticalMd,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 250),
+                child: PrimaryButton(
+                  text: context.l10n.approveReceipt,
+                  onPressed: () => _approveReceipt(context),
+                  icon: Icons.check_circle_rounded,
+                ),
+              ),
+              AppSpacing.verticalSm,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 300),
+                child: SecondaryButton(
+                  text: context.l10n.rejectReceipt,
+                  onPressed: () => _rejectReceipt(context),
+                  icon: Icons.cancel_rounded,
+                ),
+              ),
+            ],
             AppSpacing.verticalLg,
           ],
         ),
@@ -207,5 +276,111 @@ class AdminBookingDetailScreen extends StatelessWidget {
   void _completeBooking(BuildContext context) {
     context.read<AdminBookingsCubit>().completeBooking(booking.id);
     context.pop();
+  }
+
+  void _approveReceipt(BuildContext context) {
+    if (booking.paymentId == null || booking.receiptValidationId == null) {
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        final noteController = TextEditingController();
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: AppRadius.borderRadiusLg),
+          title: Text(context.l10n.approveReceipt,
+              style: AppTypography.headlineSmall),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(context.l10n.approveReceiptConfirmMessage,
+                  style: AppTypography.bodyMedium),
+              const SizedBox(height: 16),
+              AppTextField(
+                controller: noteController,
+                hint: context.l10n.adminNoteHint,
+                maxLines: 2,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(context.l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                context.read<AdminBookingsCubit>().approveReceipt(
+                      bookingId: booking.id,
+                      paymentId: booking.paymentId!,
+                      receiptValidationId: booking.receiptValidationId!,
+                      note: noteController.text.isNotEmpty
+                          ? noteController.text
+                          : null,
+                    );
+                context.pop();
+              },
+              child: Text(context.l10n.approve,
+                  style: const TextStyle(color: AppColors.primary)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _rejectReceipt(BuildContext context) {
+    if (booking.paymentId == null || booking.receiptValidationId == null) {
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        final reasonController = TextEditingController();
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: AppRadius.borderRadiusLg),
+          title: Text(context.l10n.rejectReceipt,
+              style: AppTypography.headlineSmall),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(context.l10n.rejectReceiptConfirmMessage,
+                  style: AppTypography.bodyMedium),
+              const SizedBox(height: 16),
+              AppTextField(
+                controller: reasonController,
+                hint: context.l10n.rejectionReasonHint,
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(context.l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () {
+                if (reasonController.text.trim().isEmpty) return;
+                Navigator.pop(ctx);
+                context.read<AdminBookingsCubit>().rejectReceipt(
+                      bookingId: booking.id,
+                      slotId: booking.slotId,
+                      paymentId: booking.paymentId!,
+                      receiptValidationId: booking.receiptValidationId!,
+                      reason: reasonController.text.trim(),
+                    );
+                context.pop();
+              },
+              child: Text(context.l10n.reject,
+                  style: TextStyle(color: AppColors.error)),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

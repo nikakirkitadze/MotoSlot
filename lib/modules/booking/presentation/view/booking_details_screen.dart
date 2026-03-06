@@ -98,6 +98,37 @@ class BookingDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
+            if (booking.isPendingReview) ...[
+              AppSpacing.verticalMd,
+              FadeInWidget(
+                delay: const Duration(milliseconds: 200),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.warning.withValues(alpha: 0.08),
+                    borderRadius: AppRadius.borderRadiusMd,
+                    border: Border.all(
+                        color: AppColors.warning.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.schedule_rounded,
+                          color: AppColors.warning, size: 24),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          context.l10n.receiptPendingReviewMessage,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: AppColors.warning,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
             if (booking.isConfirmed &&
                 booking.startTime.isAfter(DateTime.now().toUtc())) ...[
               AppSpacing.verticalLg,

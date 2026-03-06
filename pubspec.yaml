@@ -41,8 +41,14 @@ dependencies:
   flutter_local_notifications: ^19.0.0
   timezone: ^0.10.0
 
-  # WebView (payments)
-  webview_flutter: ^4.12.0
+  # ML Kit (receipt validation)
+  google_mlkit_text_recognition: ^0.15.0
+
+  # Image Picker
+  image_picker: ^1.1.2
+
+  # Firebase Storage (receipt uploads)
+  firebase_storage: ^12.4.0
 
   # Date/Time
   intl: ^0.20.2
@@ -53,6 +59,14 @@ dependencies:
 
   # Fonts
   google_fonts: ^6.2.1
+
+  # Social Auth
+  google_sign_in: ^6.2.2
+  sign_in_with_apple: ^6.1.4
+  crypto: ^3.0.6
+
+  # Deep Links
+  app_links: ^6.3.3
 
   # Utilities
   uuid: ^4.5.1

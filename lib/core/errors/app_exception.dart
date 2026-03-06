@@ -55,3 +55,11 @@ class StorageException extends AppException {
     super.originalError,
   });
 }
+
+class ReceiptValidationException extends AppException {
+  const ReceiptValidationException({
+    required super.message,
+    super.code,
+    super.originalError,
+  });
+}

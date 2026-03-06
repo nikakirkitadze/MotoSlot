@@ -5,14 +5,15 @@ import 'package:go_router/go_router.dart';
 import 'package:moto_slot/di/injection.dart';
 import 'package:moto_slot/modules/auth/presentation/view/splash_screen.dart';
 import 'package:moto_slot/modules/auth/presentation/view/login_screen.dart';
-import 'package:moto_slot/modules/auth/presentation/view/register_screen.dart';
-import 'package:moto_slot/modules/auth/presentation/view/forgot_password_screen.dart';
+import 'package:moto_slot/modules/auth/presentation/view/email_link_sent_screen.dart';
+import 'package:moto_slot/modules/auth/presentation/view/complete_profile_screen.dart';
 import 'package:moto_slot/modules/booking/presentation/view/user_home_screen.dart';
 import 'package:moto_slot/modules/booking/presentation/view/slot_details_screen.dart';
 import 'package:moto_slot/modules/booking/presentation/view/booking_confirmation_screen.dart';
 import 'package:moto_slot/modules/booking/presentation/view/booking_details_screen.dart';
-import 'package:moto_slot/modules/payments/presentation/view/payment_screen.dart';
-import 'package:moto_slot/modules/payments/presentation/view/payment_webview_screen.dart';
+import 'package:moto_slot/modules/payments/presentation/view/receipt_upload_screen.dart';
+import 'package:moto_slot/modules/payments/presentation/view/receipt_pending_review_screen.dart';
+import 'package:moto_slot/modules/payments/presentation/cubit/receipt_upload_cubit.dart';
 import 'package:moto_slot/modules/admin/presentation/view/admin_home_screen.dart';
 import 'package:moto_slot/modules/admin/presentation/view/admin_manual_booking_screen.dart';
 import 'package:moto_slot/modules/admin/presentation/view/admin_booking_detail_screen.dart';
@@ -60,12 +61,14 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => _buildPage(const LoginScreen(), state),
     ),
     GoRoute(
-      path: '/register',
-      pageBuilder: (context, state) => _buildPage(const RegisterScreen(), state),
+      path: '/email-link-sent',
+      pageBuilder: (context, state) =>
+          _buildPage(const EmailLinkSentScreen(), state),
     ),
     GoRoute(
-      path: '/forgot-password',
-      pageBuilder: (context, state) => _buildPage(const ForgotPasswordScreen(), state),
+      path: '/complete-profile',
+      pageBuilder: (context, state) =>
+          _buildPage(const CompleteProfileScreen(), state),
     ),
     // User routes
     GoRoute(
@@ -95,27 +98,24 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/payment',
+      path: '/receipt-upload',
       pageBuilder: (context, state) {
         final booking = state.extra as Booking;
         return _buildPage(
           BlocProvider(
-            create: (_) => getIt<BookingCubit>(),
-            child: PaymentScreen(booking: booking),
+            create: (_) => getIt<ReceiptUploadCubit>(),
+            child: ReceiptUploadScreen(booking: booking),
           ),
           state,
         );
       },
     ),
     GoRoute(
-      path: '/payment-webview',
+      path: '/receipt-pending-review',
       pageBuilder: (context, state) {
-        final params = state.extra as Map<String, String>;
+        final booking = state.extra as Booking;
         return _buildPage(
-          PaymentWebViewScreen(
-            paymentUrl: params['paymentUrl']!,
-            paymentId: params['paymentId']!,
-          ),
+          ReceiptPendingReviewScreen(booking: booking),
           state,
         );
       },

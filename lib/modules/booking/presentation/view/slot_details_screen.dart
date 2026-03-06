@@ -31,7 +31,7 @@ class SlotDetailsScreen extends StatelessWidget {
           context.read<BookingCubit>().clearError();
         }
         if (state.currentBooking != null && state.currentBooking!.isPending) {
-          context.push('/payment', extra: state.currentBooking);
+          context.push('/receipt-upload', extra: state.currentBooking);
         }
       },
       child: AppScaffold(
@@ -182,7 +182,7 @@ class SlotDetailsScreen extends StatelessWidget {
           slot: slot,
           userId: authState.user!.id,
           userFullName: authState.user!.fullName,
-          userPhone: authState.user!.phone,
+          userPhone: authState.user!.phone ?? '',
           userEmail: authState.user!.email,
           amount: _lessonPrice,
         );

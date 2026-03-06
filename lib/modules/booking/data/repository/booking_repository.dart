@@ -33,20 +33,52 @@ class BookingRepository {
   Future<Booking> confirmBooking({
     required String bookingId,
     required String paymentId,
+    String? receiptValidationId,
   }) async {
     try {
       final now = DateTime.now().toUtc();
-      await _bookingsRef.doc(bookingId).update({
+      final updates = <String, dynamic>{
         'status': BookingStatus.confirmed.value,
         'paymentId': paymentId,
         'confirmedAt': now.toIso8601String(),
-      });
+      };
+      if (receiptValidationId != null) {
+        updates['receiptValidationId'] = receiptValidationId;
+      }
+      await _bookingsRef.doc(bookingId).update(updates);
 
       final doc = await _bookingsRef.doc(bookingId).get();
       return Booking.fromJson(doc.data()!);
     } catch (e) {
       throw BookingException(
         message: 'Failed to confirm booking.',
+        originalError: e,
+      );
+    }
+  }
+
+  Future<Booking> setBookingPendingReview({
+    required String bookingId,
+    required String paymentId,
+    required String receiptValidationId,
+    String? receiptImageUrl,
+  }) async {
+    try {
+      final updates = <String, dynamic>{
+        'status': BookingStatus.pendingReview.value,
+        'paymentId': paymentId,
+        'receiptValidationId': receiptValidationId,
+      };
+      if (receiptImageUrl != null) {
+        updates['receiptImageUrl'] = receiptImageUrl;
+      }
+      await _bookingsRef.doc(bookingId).update(updates);
+
+      final doc = await _bookingsRef.doc(bookingId).get();
+      return Booking.fromJson(doc.data()!);
+    } catch (e) {
+      throw BookingException(
+        message: 'Failed to update booking for review.',
         originalError: e,
       );
     }

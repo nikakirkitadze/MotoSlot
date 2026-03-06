@@ -1,3 +1,5 @@
+import 'package:app_links/app_links.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,8 +41,31 @@ void main() async {
   runApp(const MotoSlotApp());
 }
 
-class MotoSlotApp extends StatelessWidget {
+class MotoSlotApp extends StatefulWidget {
   const MotoSlotApp({super.key});
+
+  @override
+  State<MotoSlotApp> createState() => _MotoSlotAppState();
+}
+
+class _MotoSlotAppState extends State<MotoSlotApp> {
+  late final AppLinks _appLinks;
+
+  @override
+  void initState() {
+    super.initState();
+    _appLinks = AppLinks();
+    _listenForIncomingLinks();
+  }
+
+  void _listenForIncomingLinks() {
+    _appLinks.uriLinkStream.listen((uri) {
+      if (FirebaseAuth.instance.isSignInWithEmailLink(uri.toString())) {
+        // Navigate to splash which will handle the email link
+        appRouter.go('/');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

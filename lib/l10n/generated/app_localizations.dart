@@ -212,59 +212,11 @@ abstract class AppLocalizations {
   /// **'Enter your email'**
   String get emailHint;
 
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @passwordHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your password'**
-  String get passwordHint;
-
-  /// No description provided for @forgotPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
-
   /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
   /// **'Sign In'**
   String get signIn;
-
-  /// No description provided for @dontHaveAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account? '**
-  String get dontHaveAccount;
-
-  /// No description provided for @register.
-  ///
-  /// In en, this message translates to:
-  /// **'Register'**
-  String get register;
-
-  /// No description provided for @createAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Account'**
-  String get createAccount;
-
-  /// No description provided for @joinMotoSlot.
-  ///
-  /// In en, this message translates to:
-  /// **'Join MotoSlot'**
-  String get joinMotoSlot;
-
-  /// No description provided for @createAccountSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Create an account to book your motorcycle lessons'**
-  String get createAccountSubtitle;
 
   /// No description provided for @fullName.
   ///
@@ -290,71 +242,11 @@ abstract class AppLocalizations {
   /// **'+995 XXX XXX XXX'**
   String get phoneHint;
 
-  /// No description provided for @createPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Create a password'**
-  String get createPassword;
-
-  /// No description provided for @confirmPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Password'**
-  String get confirmPassword;
-
-  /// No description provided for @confirmPasswordHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm your password'**
-  String get confirmPasswordHint;
-
-  /// No description provided for @alreadyHaveAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Already have an account? '**
-  String get alreadyHaveAccount;
-
-  /// No description provided for @resetPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset Password'**
-  String get resetPassword;
-
-  /// No description provided for @forgotPasswordTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot your password?'**
-  String get forgotPasswordTitle;
-
-  /// No description provided for @forgotPasswordSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your email address and we\'ll send you a link to reset your password.'**
-  String get forgotPasswordSubtitle;
-
   /// No description provided for @emailAddressHint.
   ///
   /// In en, this message translates to:
   /// **'Enter your email address'**
   String get emailAddressHint;
-
-  /// No description provided for @sendResetLink.
-  ///
-  /// In en, this message translates to:
-  /// **'Send Reset Link'**
-  String get sendResetLink;
-
-  /// No description provided for @emailSent.
-  ///
-  /// In en, this message translates to:
-  /// **'Email sent!'**
-  String get emailSent;
-
-  /// No description provided for @checkInboxForReset.
-  ///
-  /// In en, this message translates to:
-  /// **'Check your inbox for a password reset link.'**
-  String get checkInboxForReset;
 
   /// No description provided for @backToLogin.
   ///
@@ -374,17 +266,65 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to sign out?'**
   String get signOutConfirmMessage;
 
-  /// No description provided for @registrationFailed.
+  /// No description provided for @sendSignInLink.
   ///
   /// In en, this message translates to:
-  /// **'Registration failed. Please try again.'**
-  String get registrationFailed;
+  /// **'Send Sign-In Link'**
+  String get sendSignInLink;
 
-  /// No description provided for @resetEmailFailed.
+  /// No description provided for @orContinueWith.
   ///
   /// In en, this message translates to:
-  /// **'Failed to send reset email.'**
-  String get resetEmailFailed;
+  /// **'or continue with'**
+  String get orContinueWith;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @checkYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get checkYourEmail;
+
+  /// No description provided for @emailLinkSentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a sign-in link to your email address. Tap the link in the email to sign in.'**
+  String get emailLinkSentMessage;
+
+  /// No description provided for @completeYourProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Your Profile'**
+  String get completeYourProfile;
+
+  /// No description provided for @completeProfileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us a little about yourself to get started.'**
+  String get completeProfileSubtitle;
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'optional'**
+  String get optional;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
 
   /// No description provided for @validatorEmailRequired.
   ///
@@ -397,18 +337,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid email address'**
   String get validatorEmailInvalid;
-
-  /// No description provided for @validatorPasswordRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Password is required'**
-  String get validatorPasswordRequired;
-
-  /// No description provided for @validatorPasswordMinLength.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
-  String get validatorPasswordMinLength;
 
   /// No description provided for @validatorNameRequired.
   ///
@@ -439,18 +367,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{fieldName} is required'**
   String validatorFieldRequired(String fieldName);
-
-  /// No description provided for @validatorConfirmPasswordRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Please confirm your password'**
-  String get validatorConfirmPasswordRequired;
-
-  /// No description provided for @validatorPasswordsDoNotMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Passwords do not match'**
-  String get validatorPasswordsDoNotMatch;
 
   /// No description provided for @book.
   ///
@@ -1232,18 +1148,6 @@ abstract class AppLocalizations {
   /// **'Cancelled'**
   String get paymentStatusCancelled;
 
-  /// No description provided for @paymentProviderTbc.
-  ///
-  /// In en, this message translates to:
-  /// **'TBC Bank'**
-  String get paymentProviderTbc;
-
-  /// No description provided for @paymentProviderBog.
-  ///
-  /// In en, this message translates to:
-  /// **'Bank of Georgia'**
-  String get paymentProviderBog;
-
   /// No description provided for @dayMonday.
   ///
   /// In en, this message translates to:
@@ -1315,12 +1219,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email Address'**
   String get emailAddress;
-
-  /// No description provided for @signUp.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign Up'**
-  String get signUp;
 
   /// No description provided for @scheduleLesson.
   ///
@@ -1507,6 +1405,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By tapping Pay Now, you agree to our Terms & Conditions.'**
   String get termsAgreement;
+
+  /// No description provided for @bookingStatusPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Review'**
+  String get bookingStatusPendingReview;
+
+  /// No description provided for @paymentStatusReceiptUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Uploaded'**
+  String get paymentStatusReceiptUploaded;
+
+  /// No description provided for @paymentStatusReceiptRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Rejected'**
+  String get paymentStatusReceiptRejected;
+
+  /// No description provided for @paymentProviderReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Transfer Receipt'**
+  String get paymentProviderReceipt;
+
+  /// No description provided for @receiptUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Receipt'**
+  String get receiptUpload;
+
+  /// No description provided for @receiptUploadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Receipt'**
+  String get receiptUploadTitle;
+
+  /// No description provided for @receiptUploadInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer {amount} GEL and upload a screenshot of your bank transfer receipt.'**
+  String receiptUploadInstructions(String amount);
+
+  /// No description provided for @receiptUploadInstructionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We will verify your payment automatically.'**
+  String get receiptUploadInstructionsSubtitle;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// No description provided for @takePhotoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of your receipt'**
+  String get takePhotoDescription;
+
+  /// No description provided for @chooseFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// No description provided for @chooseFromGalleryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a screenshot from your gallery'**
+  String get chooseFromGalleryDescription;
+
+  /// No description provided for @takePhotoOrChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo or choose from gallery'**
+  String get takePhotoOrChoose;
+
+  /// No description provided for @changeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get changeImage;
+
+  /// No description provided for @submitReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Receipt'**
+  String get submitReceipt;
+
+  /// No description provided for @analyzingReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing your receipt...'**
+  String get analyzingReceipt;
+
+  /// No description provided for @uploadingReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading receipt...'**
+  String get uploadingReceipt;
+
+  /// No description provided for @slotHeldDuringUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Your slot will be held for 10 minutes during the receipt submission process.'**
+  String get slotHeldDuringUpload;
+
+  /// No description provided for @receiptPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Under Review'**
+  String get receiptPendingReview;
+
+  /// No description provided for @receiptPendingReviewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your receipt has been submitted and is pending admin verification. You will be notified once it\'s reviewed.'**
+  String get receiptPendingReviewMessage;
+
+  /// No description provided for @receiptAutoApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt verified successfully!'**
+  String get receiptAutoApproved;
+
+  /// No description provided for @receiptValidationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not validate your receipt. Please try again with a clearer image.'**
+  String get receiptValidationFailed;
+
+  /// No description provided for @failedToPickImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to pick image. Please try again.'**
+  String get failedToPickImage;
+
+  /// No description provided for @receiptReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Review'**
+  String get receiptReview;
+
+  /// No description provided for @approveReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve Receipt'**
+  String get approveReceipt;
+
+  /// No description provided for @approveReceiptConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to approve this receipt and confirm the booking?'**
+  String get approveReceiptConfirmMessage;
+
+  /// No description provided for @rejectReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Receipt'**
+  String get rejectReceipt;
+
+  /// No description provided for @rejectReceiptConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reject this receipt? The booking will be cancelled.'**
+  String get rejectReceiptConfirmMessage;
+
+  /// No description provided for @receiptApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt approved. Booking confirmed.'**
+  String get receiptApproved;
+
+  /// No description provided for @receiptRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt rejected. Booking cancelled.'**
+  String get receiptRejected;
+
+  /// No description provided for @rejectionReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason for rejecting this receipt'**
+  String get rejectionReasonHint;
+
+  /// No description provided for @adminNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional note (e.g. verified manually)'**
+  String get adminNoteHint;
+
+  /// No description provided for @approve.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approve;
+
+  /// No description provided for @reject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get reject;
 }
 
 class _AppLocalizationsDelegate

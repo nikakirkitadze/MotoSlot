@@ -74,32 +74,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailHint => 'Enter your email';
 
   @override
-  String get password => 'Password';
-
-  @override
-  String get passwordHint => 'Enter your password';
-
-  @override
-  String get forgotPassword => 'Forgot Password?';
-
-  @override
   String get signIn => 'Sign In';
-
-  @override
-  String get dontHaveAccount => 'Don\'t have an account? ';
-
-  @override
-  String get register => 'Register';
-
-  @override
-  String get createAccount => 'Create Account';
-
-  @override
-  String get joinMotoSlot => 'Join MotoSlot';
-
-  @override
-  String get createAccountSubtitle =>
-      'Create an account to book your motorcycle lessons';
 
   @override
   String get fullName => 'Full Name';
@@ -114,39 +89,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phoneHint => '+995 XXX XXX XXX';
 
   @override
-  String get createPassword => 'Create a password';
-
-  @override
-  String get confirmPassword => 'Confirm Password';
-
-  @override
-  String get confirmPasswordHint => 'Confirm your password';
-
-  @override
-  String get alreadyHaveAccount => 'Already have an account? ';
-
-  @override
-  String get resetPassword => 'Reset Password';
-
-  @override
-  String get forgotPasswordTitle => 'Forgot your password?';
-
-  @override
-  String get forgotPasswordSubtitle =>
-      'Enter your email address and we\'ll send you a link to reset your password.';
-
-  @override
   String get emailAddressHint => 'Enter your email address';
-
-  @override
-  String get sendResetLink => 'Send Reset Link';
-
-  @override
-  String get emailSent => 'Email sent!';
-
-  @override
-  String get checkInboxForReset =>
-      'Check your inbox for a password reset link.';
 
   @override
   String get backToLogin => 'Back to Login';
@@ -158,23 +101,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOutConfirmMessage => 'Are you sure you want to sign out?';
 
   @override
-  String get registrationFailed => 'Registration failed. Please try again.';
+  String get sendSignInLink => 'Send Sign-In Link';
 
   @override
-  String get resetEmailFailed => 'Failed to send reset email.';
+  String get orContinueWith => 'or continue with';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get checkYourEmail => 'Check Your Email';
+
+  @override
+  String get emailLinkSentMessage =>
+      'We\'ve sent a sign-in link to your email address. Tap the link in the email to sign in.';
+
+  @override
+  String get completeYourProfile => 'Complete Your Profile';
+
+  @override
+  String get completeProfileSubtitle =>
+      'Tell us a little about yourself to get started.';
+
+  @override
+  String get optional => 'optional';
+
+  @override
+  String get continueText => 'Continue';
 
   @override
   String get validatorEmailRequired => 'Email is required';
 
   @override
   String get validatorEmailInvalid => 'Please enter a valid email address';
-
-  @override
-  String get validatorPasswordRequired => 'Password is required';
-
-  @override
-  String get validatorPasswordMinLength =>
-      'Password must be at least 6 characters';
 
   @override
   String get validatorNameRequired => 'Name is required';
@@ -192,12 +154,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String validatorFieldRequired(String fieldName) {
     return '$fieldName is required';
   }
-
-  @override
-  String get validatorConfirmPasswordRequired => 'Please confirm your password';
-
-  @override
-  String get validatorPasswordsDoNotMatch => 'Passwords do not match';
 
   @override
   String get book => 'Book';
@@ -613,12 +569,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentStatusCancelled => 'Cancelled';
 
   @override
-  String get paymentProviderTbc => 'TBC Bank';
-
-  @override
-  String get paymentProviderBog => 'Bank of Georgia';
-
-  @override
   String get dayMonday => 'Monday';
 
   @override
@@ -653,9 +603,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emailAddress => 'Email Address';
-
-  @override
-  String get signUp => 'Sign Up';
 
   @override
   String get scheduleLesson => 'Schedule Lesson';
@@ -754,4 +701,115 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get termsAgreement =>
       'By tapping Pay Now, you agree to our Terms & Conditions.';
+
+  @override
+  String get bookingStatusPendingReview => 'Pending Review';
+
+  @override
+  String get paymentStatusReceiptUploaded => 'Receipt Uploaded';
+
+  @override
+  String get paymentStatusReceiptRejected => 'Receipt Rejected';
+
+  @override
+  String get paymentProviderReceipt => 'Bank Transfer Receipt';
+
+  @override
+  String get receiptUpload => 'Upload Receipt';
+
+  @override
+  String get receiptUploadTitle => 'Payment Receipt';
+
+  @override
+  String receiptUploadInstructions(String amount) {
+    return 'Transfer $amount GEL and upload a screenshot of your bank transfer receipt.';
+  }
+
+  @override
+  String get receiptUploadInstructionsSubtitle =>
+      'We will verify your payment automatically.';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get takePhotoDescription => 'Take a photo of your receipt';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get chooseFromGalleryDescription =>
+      'Select a screenshot from your gallery';
+
+  @override
+  String get takePhotoOrChoose => 'Take a photo or choose from gallery';
+
+  @override
+  String get changeImage => 'Change Image';
+
+  @override
+  String get submitReceipt => 'Submit Receipt';
+
+  @override
+  String get analyzingReceipt => 'Analyzing your receipt...';
+
+  @override
+  String get uploadingReceipt => 'Uploading receipt...';
+
+  @override
+  String get slotHeldDuringUpload =>
+      'Your slot will be held for 10 minutes during the receipt submission process.';
+
+  @override
+  String get receiptPendingReview => 'Receipt Under Review';
+
+  @override
+  String get receiptPendingReviewMessage =>
+      'Your receipt has been submitted and is pending admin verification. You will be notified once it\'s reviewed.';
+
+  @override
+  String get receiptAutoApproved => 'Receipt verified successfully!';
+
+  @override
+  String get receiptValidationFailed =>
+      'Could not validate your receipt. Please try again with a clearer image.';
+
+  @override
+  String get failedToPickImage => 'Failed to pick image. Please try again.';
+
+  @override
+  String get receiptReview => 'Receipt Review';
+
+  @override
+  String get approveReceipt => 'Approve Receipt';
+
+  @override
+  String get approveReceiptConfirmMessage =>
+      'Are you sure you want to approve this receipt and confirm the booking?';
+
+  @override
+  String get rejectReceipt => 'Reject Receipt';
+
+  @override
+  String get rejectReceiptConfirmMessage =>
+      'Are you sure you want to reject this receipt? The booking will be cancelled.';
+
+  @override
+  String get receiptApproved => 'Receipt approved. Booking confirmed.';
+
+  @override
+  String get receiptRejected => 'Receipt rejected. Booking cancelled.';
+
+  @override
+  String get rejectionReasonHint => 'Enter reason for rejecting this receipt';
+
+  @override
+  String get adminNoteHint => 'Optional note (e.g. verified manually)';
+
+  @override
+  String get approve => 'Approve';
+
+  @override
+  String get reject => 'Reject';
 }

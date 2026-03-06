@@ -4,6 +4,7 @@ enum UserRole { admin, user }
 
 enum BookingStatus {
   pendingPayment('pending_payment', 'Pending Payment'),
+  pendingReview('pending_review', 'Pending Review'),
   confirmed('confirmed', 'Confirmed'),
   cancelled('cancelled', 'Cancelled'),
   completed('completed', 'Completed'),
@@ -42,8 +43,10 @@ enum SlotStatus {
 enum PaymentStatus {
   pending('pending', 'Pending'),
   processing('processing', 'Processing'),
+  receiptUploaded('receipt_uploaded', 'Receipt Uploaded'),
   success('success', 'Success'),
   failed('failed', 'Failed'),
+  receiptRejected('receipt_rejected', 'Receipt Rejected'),
   cancelled('cancelled', 'Cancelled');
 
   final String value;
@@ -59,8 +62,7 @@ enum PaymentStatus {
 }
 
 enum PaymentProvider {
-  tbc('tbc', 'TBC Bank'),
-  bog('bog', 'Bank of Georgia');
+  receipt('receipt', 'Bank Transfer Receipt');
 
   final String value;
   final String label;

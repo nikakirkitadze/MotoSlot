@@ -136,4 +136,66 @@ class AdminBookingsCubit extends Cubit<AdminBookingsState> {
   void clearMessages() {
     emit(state.copyWith(clearError: true, clearSuccess: true));
   }
+
+  // ── Receipt Review ──
+
+  Future<void> approveReceipt({
+    required String bookingId,
+    required String paymentId,
+    required String receiptValidationId,
+    String? note,
+  }) async {
+    emit(state.copyWith(status: StateStatus.loading, clearError: true));
+    try {
+      await _adminRepository.approveReceipt(
+        bookingId: bookingId,
+        paymentId: paymentId,
+        receiptValidationId: receiptValidationId,
+        note: note,
+      );
+      emit(state.copyWith(
+        successMessage: 'receiptApproved',
+      ));
+      await loadBookings(
+        status: state.filterStatus,
+        date: state.filterDate,
+      );
+    } on AppException catch (e) {
+      emit(state.copyWith(
+        status: StateStatus.failure,
+        errorMessage: e.message,
+      ));
+    }
+  }
+
+  Future<void> rejectReceipt({
+    required String bookingId,
+    required String slotId,
+    required String paymentId,
+    required String receiptValidationId,
+    required String reason,
+  }) async {
+    emit(state.copyWith(status: StateStatus.loading, clearError: true));
+    try {
+      await _adminRepository.rejectReceipt(
+        bookingId: bookingId,
+        slotId: slotId,
+        paymentId: paymentId,
+        receiptValidationId: receiptValidationId,
+        reason: reason,
+      );
+      emit(state.copyWith(
+        successMessage: 'receiptRejected',
+      ));
+      await loadBookings(
+        status: state.filterStatus,
+        date: state.filterDate,
+      );
+    } on AppException catch (e) {
+      emit(state.copyWith(
+        status: StateStatus.failure,
+        errorMessage: e.message,
+      ));
+    }
+  }
 }

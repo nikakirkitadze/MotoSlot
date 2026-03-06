@@ -19,6 +19,8 @@ class Booking extends Equatable {
   final String? contactPhone;
   final String? cancellationReason;
   final bool isManualBooking;
+  final String? receiptImageUrl;
+  final String? receiptValidationId;
   final DateTime createdAt;
   final DateTime? confirmedAt;
   final DateTime? cancelledAt;
@@ -43,6 +45,8 @@ class Booking extends Equatable {
     this.contactPhone,
     this.cancellationReason,
     this.isManualBooking = false,
+    this.receiptImageUrl,
+    this.receiptValidationId,
     required this.createdAt,
     this.confirmedAt,
     this.cancelledAt,
@@ -51,6 +55,7 @@ class Booking extends Equatable {
   });
 
   bool get isPending => status == BookingStatus.pendingPayment;
+  bool get isPendingReview => status == BookingStatus.pendingReview;
   bool get isConfirmed => status == BookingStatus.confirmed;
   bool get isCancelled => status == BookingStatus.cancelled;
   bool get isCompleted => status == BookingStatus.completed;
@@ -77,6 +82,8 @@ class Booking extends Equatable {
       contactPhone: json['contactPhone'] as String?,
       cancellationReason: json['cancellationReason'] as String?,
       isManualBooking: json['isManualBooking'] as bool? ?? false,
+      receiptImageUrl: json['receiptImageUrl'] as String?,
+      receiptValidationId: json['receiptValidationId'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       confirmedAt: json['confirmedAt'] != null
           ? DateTime.parse(json['confirmedAt'] as String)
@@ -112,6 +119,8 @@ class Booking extends Equatable {
       'contactPhone': contactPhone,
       'cancellationReason': cancellationReason,
       'isManualBooking': isManualBooking,
+      'receiptImageUrl': receiptImageUrl,
+      'receiptValidationId': receiptValidationId,
       'createdAt': createdAt.toIso8601String(),
       'confirmedAt': confirmedAt?.toIso8601String(),
       'cancelledAt': cancelledAt?.toIso8601String(),
@@ -138,6 +147,8 @@ class Booking extends Equatable {
     String? contactPhone,
     String? cancellationReason,
     bool? isManualBooking,
+    String? receiptImageUrl,
+    String? receiptValidationId,
     DateTime? createdAt,
     DateTime? confirmedAt,
     DateTime? cancelledAt,
@@ -162,6 +173,8 @@ class Booking extends Equatable {
       contactPhone: contactPhone ?? this.contactPhone,
       cancellationReason: cancellationReason ?? this.cancellationReason,
       isManualBooking: isManualBooking ?? this.isManualBooking,
+      receiptImageUrl: receiptImageUrl ?? this.receiptImageUrl,
+      receiptValidationId: receiptValidationId ?? this.receiptValidationId,
       createdAt: createdAt ?? this.createdAt,
       confirmedAt: confirmedAt ?? this.confirmedAt,
       cancelledAt: cancelledAt ?? this.cancelledAt,
@@ -175,7 +188,8 @@ class Booking extends Equatable {
         id, slotId, userId, userFullName, userPhone, userEmail,
         startTime, endTime, durationMinutes, status, paymentId,
         amount, instructorName, location, contactPhone,
-        cancellationReason, isManualBooking, createdAt,
+        cancellationReason, isManualBooking,
+        receiptImageUrl, receiptValidationId, createdAt,
         confirmedAt, cancelledAt, completedAt, expiresAt,
       ];
 }

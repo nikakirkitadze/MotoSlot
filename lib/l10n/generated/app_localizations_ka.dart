@@ -74,32 +74,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get emailHint => 'შეიყვანეთ ელ. ფოსტა';
 
   @override
-  String get password => 'პაროლი';
-
-  @override
-  String get passwordHint => 'შეიყვანეთ პაროლი';
-
-  @override
-  String get forgotPassword => 'დაგავიწყდათ პაროლი?';
-
-  @override
   String get signIn => 'შესვლა';
-
-  @override
-  String get dontHaveAccount => 'არ გაქვთ ანგარიში? ';
-
-  @override
-  String get register => 'რეგისტრაცია';
-
-  @override
-  String get createAccount => 'ანგარიშის შექმნა';
-
-  @override
-  String get joinMotoSlot => 'შემოგვიერთდით MotoSlot-ში';
-
-  @override
-  String get createAccountSubtitle =>
-      'შექმენით ანგარიში მოტოციკლის გაკვეთილების დასაჯავშნად';
 
   @override
   String get fullName => 'სრული სახელი';
@@ -114,39 +89,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get phoneHint => '+995 XXX XXX XXX';
 
   @override
-  String get createPassword => 'შექმენით პაროლი';
-
-  @override
-  String get confirmPassword => 'დაადასტურეთ პაროლი';
-
-  @override
-  String get confirmPasswordHint => 'ხელახლა შეიყვანეთ პაროლი';
-
-  @override
-  String get alreadyHaveAccount => 'უკვე გაქვთ ანგარიში? ';
-
-  @override
-  String get resetPassword => 'პაროლის აღდგენა';
-
-  @override
-  String get forgotPasswordTitle => 'დაგავიწყდათ პაროლი?';
-
-  @override
-  String get forgotPasswordSubtitle =>
-      'შეიყვანეთ ელ. ფოსტის მისამართი და ჩვენ გამოგიგზავნით პაროლის აღდგენის ბმულს.';
-
-  @override
   String get emailAddressHint => 'შეიყვანეთ ელ. ფოსტის მისამართი';
-
-  @override
-  String get sendResetLink => 'აღდგენის ბმულის გაგზავნა';
-
-  @override
-  String get emailSent => 'წერილი გაგზავნილია!';
-
-  @override
-  String get checkInboxForReset =>
-      'შეამოწმეთ თქვენი ელ. ფოსტა პაროლის აღდგენის ბმულისთვის.';
 
   @override
   String get backToLogin => 'შესვლაზე დაბრუნება';
@@ -158,11 +101,36 @@ class AppLocalizationsKa extends AppLocalizations {
   String get signOutConfirmMessage => 'დარწმუნებული ხართ, რომ გსურთ გასვლა?';
 
   @override
-  String get registrationFailed =>
-      'რეგისტრაცია ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.';
+  String get sendSignInLink => 'შესვლის ბმულის გაგზავნა';
 
   @override
-  String get resetEmailFailed => 'აღდგენის წერილის გაგზავნა ვერ მოხერხდა.';
+  String get orContinueWith => 'ან გააგრძელეთ';
+
+  @override
+  String get continueWithApple => 'Apple-ით გაგრძელება';
+
+  @override
+  String get continueWithGoogle => 'Google-ით გაგრძელება';
+
+  @override
+  String get checkYourEmail => 'შეამოწმეთ ელ. ფოსტა';
+
+  @override
+  String get emailLinkSentMessage =>
+      'ჩვენ გამოვაგზავნეთ შესვლის ბმული თქვენს ელ. ფოსტაზე. შესასვლელად დააჭირეთ ბმულს წერილში.';
+
+  @override
+  String get completeYourProfile => 'შეავსეთ პროფილი';
+
+  @override
+  String get completeProfileSubtitle =>
+      'მოგვიყევით ცოტა თქვენს შესახებ დასაწყებად.';
+
+  @override
+  String get optional => 'არასავალდებულო';
+
+  @override
+  String get continueText => 'გაგრძელება';
 
   @override
   String get validatorEmailRequired => 'ელ. ფოსტა აუცილებელია';
@@ -170,12 +138,6 @@ class AppLocalizationsKa extends AppLocalizations {
   @override
   String get validatorEmailInvalid =>
       'გთხოვთ, შეიყვანოთ სწორი ელ. ფოსტის მისამართი';
-
-  @override
-  String get validatorPasswordRequired => 'პაროლი აუცილებელია';
-
-  @override
-  String get validatorPasswordMinLength => 'პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო';
 
   @override
   String get validatorNameRequired => 'სახელი აუცილებელია';
@@ -194,12 +156,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String validatorFieldRequired(String fieldName) {
     return '$fieldName აუცილებელია';
   }
-
-  @override
-  String get validatorConfirmPasswordRequired => 'გთხოვთ, დაადასტუროთ პაროლი';
-
-  @override
-  String get validatorPasswordsDoNotMatch => 'პაროლები არ ემთხვევა';
 
   @override
   String get book => 'ჯავშანი';
@@ -615,12 +571,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String get paymentStatusCancelled => 'გაუქმებული';
 
   @override
-  String get paymentProviderTbc => 'თიბისი ბანკი';
-
-  @override
-  String get paymentProviderBog => 'საქართველოს ბანკი';
-
-  @override
   String get dayMonday => 'ორშაბათი';
 
   @override
@@ -655,9 +605,6 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get emailAddress => 'ელ. ფოსტის მისამართი';
-
-  @override
-  String get signUp => 'რეგისტრაცია';
 
   @override
   String get scheduleLesson => 'გაკვეთილის დაგეგმვა';
@@ -756,4 +703,116 @@ class AppLocalizationsKa extends AppLocalizations {
   @override
   String get termsAgreement =>
       'გადახდაზე დაჭერით თქვენ ეთანხმებით ჩვენს წესებსა და პირობებს.';
+
+  @override
+  String get bookingStatusPendingReview => 'განხილვის მოლოდინში';
+
+  @override
+  String get paymentStatusReceiptUploaded => 'ქვითარი ატვირთულია';
+
+  @override
+  String get paymentStatusReceiptRejected => 'ქვითარი უარყოფილია';
+
+  @override
+  String get paymentProviderReceipt => 'საბანკო გადარიცხვის ქვითარი';
+
+  @override
+  String get receiptUpload => 'ქვითრის ატვირთვა';
+
+  @override
+  String get receiptUploadTitle => 'გადახდის ქვითარი';
+
+  @override
+  String receiptUploadInstructions(String amount) {
+    return 'გადარიცხეთ $amount ₾ და ატვირთეთ ბანკის გადარიცხვის სკრინშოტი.';
+  }
+
+  @override
+  String get receiptUploadInstructionsSubtitle =>
+      'ჩვენ ავტომატურად გადავამოწმებთ თქვენს გადახდას.';
+
+  @override
+  String get takePhoto => 'ფოტოს გადაღება';
+
+  @override
+  String get takePhotoDescription => 'გადაიღეთ ქვითრის ფოტო';
+
+  @override
+  String get chooseFromGallery => 'გალერიიდან არჩევა';
+
+  @override
+  String get chooseFromGalleryDescription => 'აირჩიეთ სკრინშოტი გალერიიდან';
+
+  @override
+  String get takePhotoOrChoose => 'გადაიღეთ ფოტო ან აირჩიეთ გალერიიდან';
+
+  @override
+  String get changeImage => 'სურათის შეცვლა';
+
+  @override
+  String get submitReceipt => 'ქვითრის გაგზავნა';
+
+  @override
+  String get analyzingReceipt => 'ქვითარი მოწმდება...';
+
+  @override
+  String get uploadingReceipt => 'ქვითარი იტვირთება...';
+
+  @override
+  String get slotHeldDuringUpload =>
+      'თქვენი სლოტი დაცულია 10 წუთის განმავლობაში ქვითრის გაგზავნის პროცესში.';
+
+  @override
+  String get receiptPendingReview => 'ქვითარი განხილვის პროცესშია';
+
+  @override
+  String get receiptPendingReviewMessage =>
+      'თქვენი ქვითარი გაგზავნილია და ელოდება ადმინისტრატორის ვერიფიკაციას. შეტყობინება მიიღებთ განხილვის შემდეგ.';
+
+  @override
+  String get receiptAutoApproved => 'ქვითარი წარმატებით გადამოწმდა!';
+
+  @override
+  String get receiptValidationFailed =>
+      'ქვითრის გადამოწმება ვერ მოხერხდა. გთხოვთ, სცადოთ უფრო მკაფიო სურათით.';
+
+  @override
+  String get failedToPickImage =>
+      'სურათის არჩევა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.';
+
+  @override
+  String get receiptReview => 'ქვითრის განხილვა';
+
+  @override
+  String get approveReceipt => 'ქვითრის დამტკიცება';
+
+  @override
+  String get approveReceiptConfirmMessage =>
+      'დარწმუნებული ხართ, რომ გსურთ ქვითრის დამტკიცება და ჯავშნის დადასტურება?';
+
+  @override
+  String get rejectReceipt => 'ქვითრის უარყოფა';
+
+  @override
+  String get rejectReceiptConfirmMessage =>
+      'დარწმუნებული ხართ, რომ გსურთ ქვითრის უარყოფა? ჯავშანი გაუქმდება.';
+
+  @override
+  String get receiptApproved =>
+      'ქვითარი დამტკიცებულია. ჯავშანი დადასტურებულია.';
+
+  @override
+  String get receiptRejected => 'ქვითარი უარყოფილია. ჯავშანი გაუქმებულია.';
+
+  @override
+  String get rejectionReasonHint => 'შეიყვანეთ ქვითრის უარყოფის მიზეზი';
+
+  @override
+  String get adminNoteHint => 'დამატებითი შენიშვნა (არასავალდებულო)';
+
+  @override
+  String get approve => 'დამტკიცება';
+
+  @override
+  String get reject => 'უარყოფა';
 }

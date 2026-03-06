@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:moto_slot/core/network/api_client.dart';
 import 'package:moto_slot/core/storage/secure_storage_service.dart';
@@ -10,6 +12,10 @@ import 'package:moto_slot/modules/auth/data/repository/auth_repository.dart';
 import 'package:moto_slot/modules/booking/data/repository/booking_repository.dart';
 import 'package:moto_slot/modules/booking/data/repository/slot_repository.dart';
 import 'package:moto_slot/modules/payments/data/repository/payment_repository.dart';
+import 'package:moto_slot/modules/payments/data/repository/receipt_validation_repository.dart';
+import 'package:moto_slot/modules/payments/data/service/receipt_text_recognition_service.dart';
+import 'package:moto_slot/modules/payments/data/service/receipt_validation_service.dart';
+import 'package:moto_slot/modules/payments/data/service/receipt_storage_service.dart';
 import 'package:moto_slot/modules/notifications/data/repository/notification_repository.dart';
 import 'package:moto_slot/modules/admin/data/repository/admin_repository.dart';
 
@@ -19,7 +25,7 @@ import 'package:moto_slot/modules/booking/presentation/cubit/booking_cubit.dart'
 import 'package:moto_slot/modules/admin/presentation/cubit/admin_availability_cubit.dart';
 import 'package:moto_slot/modules/admin/presentation/cubit/admin_bookings_cubit.dart';
 import 'package:moto_slot/modules/notifications/presentation/cubit/notifications_cubit.dart';
-import 'package:moto_slot/modules/payments/presentation/cubit/payment_cubit.dart';
+import 'package:moto_slot/modules/payments/presentation/cubit/receipt_upload_cubit.dart';
 import 'package:moto_slot/core/locale/locale_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -29,9 +35,11 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
   getIt.registerLazySingleton<FirebaseFunctions>(() => FirebaseFunctions.instance);
+  getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => const FlutterSecureStorage(),
   );
+  getIt.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn());
 
   // Core Services
   getIt.registerLazySingleton<SecureStorageService>(
@@ -44,12 +52,26 @@ Future<void> configureDependencies() async {
     ),
   );
 
+  // Receipt Validation Services
+  getIt.registerLazySingleton<ReceiptTextRecognitionService>(
+    () => ReceiptTextRecognitionService(),
+  );
+  getIt.registerLazySingleton<ReceiptValidationService>(
+    () => ReceiptValidationService(
+      textRecognitionService: getIt<ReceiptTextRecognitionService>(),
+    ),
+  );
+  getIt.registerLazySingleton<ReceiptStorageService>(
+    () => ReceiptStorageService(storage: getIt<FirebaseStorage>()),
+  );
+
   // Repositories
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepository(
       firebaseAuth: getIt<FirebaseAuth>(),
       firestore: getIt<FirebaseFirestore>(),
       storageService: getIt<SecureStorageService>(),
+      googleSignIn: getIt<GoogleSignIn>(),
     ),
   );
   getIt.registerLazySingleton<SlotRepository>(
@@ -63,7 +85,11 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<PaymentRepository>(
     () => PaymentRepository(
-      functions: getIt<FirebaseFunctions>(),
+      firestore: getIt<FirebaseFirestore>(),
+    ),
+  );
+  getIt.registerLazySingleton<ReceiptValidationRepository>(
+    () => ReceiptValidationRepository(
       firestore: getIt<FirebaseFirestore>(),
     ),
   );
@@ -92,7 +118,6 @@ Future<void> configureDependencies() async {
   getIt.registerFactory<BookingCubit>(
     () => BookingCubit(
       bookingRepository: getIt<BookingRepository>(),
-      paymentRepository: getIt<PaymentRepository>(),
     ),
   );
   getIt.registerFactory<AdminAvailabilityCubit>(
@@ -106,7 +131,13 @@ Future<void> configureDependencies() async {
       notificationRepository: getIt<NotificationRepository>(),
     ),
   );
-  getIt.registerFactory<PaymentCubit>(
-    () => PaymentCubit(paymentRepository: getIt<PaymentRepository>()),
+  getIt.registerFactory<ReceiptUploadCubit>(
+    () => ReceiptUploadCubit(
+      paymentRepository: getIt<PaymentRepository>(),
+      receiptValidationRepository: getIt<ReceiptValidationRepository>(),
+      validationService: getIt<ReceiptValidationService>(),
+      storageService: getIt<ReceiptStorageService>(),
+      bookingRepository: getIt<BookingRepository>(),
+    ),
   );
 }

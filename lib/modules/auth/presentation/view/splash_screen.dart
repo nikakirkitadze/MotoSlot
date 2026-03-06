@@ -1,3 +1,5 @@
+import 'package:app_links/app_links.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
+  bool _handledEmailLink = false;
 
   @override
   void initState() {
@@ -27,17 +30,46 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1200),
     );
     _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0, 0.6, curve: Curves.easeOut)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0, 0.6, curve: Curves.easeOut)),
     );
     _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0, 0.6, curve: Curves.easeOutCubic)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0, 0.6, curve: Curves.easeOutCubic)),
     );
     _controller.forward();
 
     Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
-      context.read<AuthCubit>().checkAuthStatus();
+      _handleInitialLink();
     });
+  }
+
+  Future<void> _handleInitialLink() async {
+    try {
+      final appLinks = AppLinks();
+      final initialUri = await appLinks.getInitialLink();
+
+      if (initialUri != null &&
+          FirebaseAuth.instance
+              .isSignInWithEmailLink(initialUri.toString())) {
+        _handledEmailLink = true;
+        if (mounted) {
+          context
+              .read<AuthCubit>()
+              .signInWithEmailLink(initialUri.toString());
+        }
+        return;
+      }
+    } catch (_) {
+      // No initial link or error — fall through to normal auth check
+    }
+
+    if (mounted) {
+      context.read<AuthCubit>().checkAuthStatus();
+    }
   }
 
   @override
@@ -50,17 +82,21 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (listenerContext, state) {
-        if (state.status == StateStatus.success) {
+        if (state.status == StateStatus.success ||
+            (_handledEmailLink && state.status == StateStatus.failure)) {
+          final navigator = GoRouter.of(listenerContext);
           Future.delayed(const Duration(milliseconds: 1000), () {
             if (!mounted) return;
             if (state.isAuthenticated) {
-              if (state.isAdmin) {
-                listenerContext.go('/admin');
+              if (state.needsProfileCompletion) {
+                navigator.go('/complete-profile');
+              } else if (state.isAdmin) {
+                navigator.go('/admin');
               } else {
-                listenerContext.go('/home');
+                navigator.go('/home');
               }
             } else {
-              listenerContext.go('/login');
+              navigator.go('/login');
             }
           });
         }

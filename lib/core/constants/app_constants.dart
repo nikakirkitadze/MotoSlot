@@ -24,8 +24,21 @@ class AppConstants {
 
   // Booking statuses
   static const String statusPendingPayment = 'pending_payment';
+  static const String statusPendingReview = 'pending_review';
   static const String statusConfirmed = 'confirmed';
   static const String statusCancelled = 'cancelled';
   static const String statusCompleted = 'completed';
   static const String statusExpired = 'expired';
+
+  // Receipt validation
+  static const double receiptAutoConfirmThreshold = 0.90;
+  static const int receiptMaxAgeDays = 1;
+  static const String receiptsStoragePath = 'receipts';
+  static const String receiptsCollection = 'receipt_validations';
+  static const List<String> expectedRecipientKeywords = [
+    'motoslot',
+    'moto slot',
+    'მოტოსლოტ',
+    'მოტო სლოტ',
+  ];
 }

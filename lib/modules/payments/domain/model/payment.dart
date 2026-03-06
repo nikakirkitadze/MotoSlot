@@ -11,6 +11,8 @@ class Payment extends Equatable {
   final PaymentProvider provider;
   final String? transactionId;
   final String? paymentUrl;
+  final String? receiptImageUrl;
+  final String? receiptValidationId;
   final String? errorMessage;
   final DateTime createdAt;
   final DateTime? completedAt;
@@ -25,6 +27,8 @@ class Payment extends Equatable {
     required this.provider,
     this.transactionId,
     this.paymentUrl,
+    this.receiptImageUrl,
+    this.receiptValidationId,
     this.errorMessage,
     required this.createdAt,
     this.completedAt,
@@ -42,11 +46,14 @@ class Payment extends Equatable {
       amount: (json['amount'] as num).toDouble(),
       currency: json['currency'] as String? ?? 'GEL',
       status: PaymentStatus.fromValue(json['status'] as String),
-      provider: json['provider'] == 'bog'
-          ? PaymentProvider.bog
-          : PaymentProvider.tbc,
+      provider: PaymentProvider.values.firstWhere(
+        (e) => e.value == (json['provider'] as String? ?? 'receipt'),
+        orElse: () => PaymentProvider.receipt,
+      ),
       transactionId: json['transactionId'] as String?,
       paymentUrl: json['paymentUrl'] as String?,
+      receiptImageUrl: json['receiptImageUrl'] as String?,
+      receiptValidationId: json['receiptValidationId'] as String?,
       errorMessage: json['errorMessage'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       completedAt: json['completedAt'] != null
@@ -66,6 +73,8 @@ class Payment extends Equatable {
       'provider': provider.value,
       'transactionId': transactionId,
       'paymentUrl': paymentUrl,
+      'receiptImageUrl': receiptImageUrl,
+      'receiptValidationId': receiptValidationId,
       'errorMessage': errorMessage,
       'createdAt': createdAt.toIso8601String(),
       'completedAt': completedAt?.toIso8601String(),
@@ -82,6 +91,8 @@ class Payment extends Equatable {
     PaymentProvider? provider,
     String? transactionId,
     String? paymentUrl,
+    String? receiptImageUrl,
+    String? receiptValidationId,
     String? errorMessage,
     DateTime? createdAt,
     DateTime? completedAt,
@@ -96,6 +107,8 @@ class Payment extends Equatable {
       provider: provider ?? this.provider,
       transactionId: transactionId ?? this.transactionId,
       paymentUrl: paymentUrl ?? this.paymentUrl,
+      receiptImageUrl: receiptImageUrl ?? this.receiptImageUrl,
+      receiptValidationId: receiptValidationId ?? this.receiptValidationId,
       errorMessage: errorMessage ?? this.errorMessage,
       createdAt: createdAt ?? this.createdAt,
       completedAt: completedAt ?? this.completedAt,
@@ -105,6 +118,7 @@ class Payment extends Equatable {
   @override
   List<Object?> get props => [
         id, bookingId, userId, amount, currency, status, provider,
-        transactionId, paymentUrl, errorMessage, createdAt, completedAt,
+        transactionId, paymentUrl, receiptImageUrl, receiptValidationId,
+        errorMessage, createdAt, completedAt,
       ];
 }

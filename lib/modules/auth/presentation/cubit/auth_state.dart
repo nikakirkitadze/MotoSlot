@@ -6,13 +6,15 @@ class AuthState extends Equatable {
   final StateStatus status;
   final AppUser? user;
   final String? errorMessage;
-  final bool isPasswordResetSent;
+  final bool isEmailLinkSent;
+  final bool needsProfileCompletion;
 
   const AuthState({
     this.status = StateStatus.initial,
     this.user,
     this.errorMessage,
-    this.isPasswordResetSent = false,
+    this.isEmailLinkSent = false,
+    this.needsProfileCompletion = false,
   });
 
   bool get isAuthenticated => user != null;
@@ -23,7 +25,8 @@ class AuthState extends Equatable {
     StateStatus? status,
     AppUser? user,
     String? errorMessage,
-    bool? isPasswordResetSent,
+    bool? isEmailLinkSent,
+    bool? needsProfileCompletion,
     bool clearUser = false,
     bool clearError = false,
   }) {
@@ -31,10 +34,13 @@ class AuthState extends Equatable {
       status: status ?? this.status,
       user: clearUser ? null : (user ?? this.user),
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      isPasswordResetSent: isPasswordResetSent ?? this.isPasswordResetSent,
+      isEmailLinkSent: isEmailLinkSent ?? this.isEmailLinkSent,
+      needsProfileCompletion:
+          needsProfileCompletion ?? this.needsProfileCompletion,
     );
   }
 
   @override
-  List<Object?> get props => [status, user, errorMessage, isPasswordResetSent];
+  List<Object?> get props =>
+      [status, user, errorMessage, isEmailLinkSent, needsProfileCompletion];
 }

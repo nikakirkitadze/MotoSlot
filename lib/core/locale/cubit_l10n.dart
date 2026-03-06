@@ -32,8 +32,6 @@ String localizeMessage(BuildContext context, String message) {
     'failedToLoadBookings': l10n.failedToLoadBookings,
     'failedToLoadSlots': l10n.failedToLoadSlots,
     'failedToLoadAvailableSlots': l10n.failedToLoadAvailableSlots,
-    'registrationFailed': l10n.registrationFailed,
-    'resetEmailFailed': l10n.resetEmailFailed,
     'paymentVerificationFailed': l10n.paymentVerificationFailed,
     'paymentNotCompleted': l10n.paymentNotCompleted,
     'paymentVerificationError': l10n.paymentVerificationError,
